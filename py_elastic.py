@@ -1,9 +1,6 @@
-#from elasticsearch import Elasticsearch
-from elasticsearch_dsl import connections, Search, Q
-
-from datetime import date, datetime
-import pprint
-
+from elasticsearch import Elasticsearch
+import requests
+import json
 
 #connection to elastic_py
 def elastic_connection_py():
@@ -154,10 +151,11 @@ def run_search(fxn):
 
 #####################################################################
 if __name__ == "__main__":
-	client = elastic_connection_dsl()
-	s = Search(using=client)
-	print(s)
-#	run_search(sample_json1())
+	client = elastic_connection_py()
+	q = sample_json1()
+	res = client.search(index="*", body=q)	
+	parsed = json.loads(res)
+	print(json.dumps(parsed, indent=4, sort_keys=True))
 	
 
 
