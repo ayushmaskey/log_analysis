@@ -1,6 +1,6 @@
 from elasticsearch import Elasticsearch
-import requests
-import json
+#import requests
+#import json
 
 #connection to elastic_py
 def elastic_connection_py():
@@ -152,11 +152,26 @@ def run_search(fxn):
 #####################################################################
 if __name__ == "__main__":
 	client = elastic_connection_py()
-	q = sample_json1()
-	res = client.search(index="*", body=q)	
-	parsed = json.loads(res)
-	print(json.dumps(parsed, indent=4, sort_keys=True))
-	
+	query = sample_json1()
+	result= client.search(index="*", body=query)	
+
+	for r in result:
+		print(r)
+
+	print()
+
+	for f in result['aggregations']:
+		print(f)
+
+	print()
+
+	for g in result['aggregations']['tag_name']:
+		print(g)
+
+	print()
+
+	for h in result['aggregations']['tag_name']['buckets']:
+		print(h)	
 
 
 
