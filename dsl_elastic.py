@@ -44,7 +44,6 @@ def dsl_equivalent_from_json(c):
 	print()
 	return dsl
 
-#########################################################################################
 
 
 
@@ -65,7 +64,7 @@ def run_search(fxn):
 
 #####################################################################
 if __name__ == "__main__":
-	client = elastic_connection_dsl()
+	client = elastic_connection_py()
 	s = Search(using=client)
 	run_search(sample_json1())
 	
