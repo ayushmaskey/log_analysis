@@ -12,8 +12,8 @@ def elastic_connection_py():
 #####################################################################
 if __name__ == "__main__":
 	client = elastic_connection_py()
-	query = sample_json1
-'''	result= client.search(index="*", body=query)	
+	query = sample_json1()
+	result= client.search(index="*", body=query)	
 
 	for r in result:
 		print(r)
@@ -32,5 +32,5 @@ if __name__ == "__main__":
 
 	for h in result['aggregations']['tag_name']['buckets']:
 		print(h)	
-'''
+
 
