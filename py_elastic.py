@@ -1,6 +1,5 @@
 from elasticsearch import Elasticsearch
-#import requests
-#import json
+from request_json import sample_json1
 
 #connection to elastic_py
 def elastic_connection_py():
@@ -9,16 +8,6 @@ def elastic_connection_py():
 	    raise ValueError("Connection failed")
 	return es
 
-
-#connection to elastic_dsl
-def elastic_connection_dsl():
-	'''
-	creates a connection to elasticsearch
-	can connect to more than one
-	returns the connection object
-	'''
-	es = connections.create_connection( hosts= ['localhost'], timeout=20)
-	return es
 
 def total_docs_all_indices(search, str="total"):
 	'''
@@ -49,90 +38,6 @@ def dsl_equivalent_from_json(c):
 	print()
 	return dsl
 
-#########################################################################################
-def sample_json1():
-	'''kibana 24hour json'''
-	body = {
-		"query": {
-		 "bool": {
-		  "must": [
-		   {
-		    "query_string": {
-		     "query": "*",
-		     "analyze_wildcard": "true"
-		    }
-		   },
-		   {
-		    "range": {
-		     "@timestamp": {
-		      "gte": "now-2M",
-		      "lte": "now",
-		      "format": "epoch_millis"
-		     }
-		    }
-		   }
-		  ],
-		  "must_not": []
-		 }
-		},
-		"size": 0,
-		"aggs": {
-		 "tag_name": {
-		  "date_histogram": {
-		   "field": "@timestamp",
-		   "interval": "30m",
-		   "time_zone": "Pacific/Honolulu",
-		   "min_doc_count": 1
-		  }
-		 }
-		} 
-	}
-	return body
-
-def sample_json2():
-	'''json from qbox example'''
-	body = {
-		"query": {
-		 "filtered": {
-		  "query": {
-		   "query_string": {
-		    "query": "*",
-		    "analyze_wildcard": "true"
-		   }
-		  },
-		  "filter": {
-		   "bool": {
-		    "must": [
-		     {
-		      "range": {
-		       "@timestamp": {
-		        "gte": "now-12M",
-		        "lte": "now",
-		        "format": "epoch_millis"
-		       }
-		      }
-		     }
-		    ],
-		    "must_not":[]
-		   }
-		  }
-		 }
-		},
-		"size": 0,
-		"aggs": {
-		 "tag_name": {
-		  "terms": {
-		   "field": "remote_ip.raw",
-		   "size": 1000,
-		   "order": {
-		    "_count": "desc"
-		   }
-		  }
-		 }
-		}
-	}
-	return body
-
 
 def run_search(fxn):
 	#dsl = dsl_equivalent_from_json(fxn)
@@ -152,7 +57,7 @@ def run_search(fxn):
 #####################################################################
 if __name__ == "__main__":
 	client = elastic_connection_py()
-	query = sample_json1()
+	query = sample_json1
 	result= client.search(index="*", body=query)	
 
 	for r in result:
@@ -172,7 +77,6 @@ if __name__ == "__main__":
 
 	for h in result['aggregations']['tag_name']['buckets']:
 		print(h)	
-
 
 
 # s = s.doc_type('logs')
