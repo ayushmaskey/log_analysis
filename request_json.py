@@ -1,4 +1,4 @@
-def sample_json1():
+def total_traffic_count_30m_interval():
 	'''kibana 24hour json'''
 	body = {
 		"query": {
@@ -13,8 +13,8 @@ def sample_json1():
 		   {
 		    "range": {
 		     "@timestamp": {
-		      "gte": "1521353712139",
-		      "lte": "1521440112139",
+		      "gte": "now-24H",
+		      "lte": "now",
 		      "format": "epoch_millis"
 		     }
 		    }
@@ -25,7 +25,7 @@ def sample_json1():
 		},
 		"size": 0,
 		"aggs": {
-		 "tag_name": {
+		 "total_traffic": {
 		  "date_histogram": {
 		   "field": "@timestamp",
 		   "interval": "30m",
@@ -40,43 +40,53 @@ def sample_json1():
 def sample_json2():
 	'''json from qbox example'''
 	body = {
-		"query": {
-		 "filtered": {
 		  "query": {
-		   "query_string": {
-		    "query": "*",
-		    "analyze_wildcard": "true"
-		   }
-		  },
-		  "filter": {
-		   "bool": {
-		    "must": [
-		     {
-		      "range": {
-		       "@timestamp": {
-		        "gte": "now-12M",
-		        "lte": "now",
-		        "format": "epoch_millis"
-		       }
+		    "filtered": {
+		      "query": {
+		        "query_string": {
+		          "query": "*",
+		          "analyze_wildcard": "true"
+		        }
+		      },
+		      "filter": {
+		        "bool": {
+		          "must": [
+		            {
+		              "range": {
+		                "@timestamp": {
+		                  "gte": "now-24H",
+		                  "lte": "now",
+		                  "format": "epoch_millis"
+		                }
+		              }
+		            }
+		         ],
+		          "must_not": []
+		        }
 		      }
-		     }
-		    ],
-		    "must_not":[]
-		   }
+		    }
+		  },
+		  "size": 0,
+		  "aggs": {
+		    "top_10_ip": {
+		      "terms": {
+		        "field": "ips",
+		        "size": 10,
+		        "order": {
+		          "_count": "desc"
+		        }
+		      }
+		    }
 		  }
-		 }
-		},
-		"size": 0,
+		}
+	return body
+
+def list_field_names():
+	body={
 		"aggs": {
-		 "tag_name": {
-		  "terms": {
-		   "field": "remote_ip.raw",
-		   "size": 1000,
-		   "order": {
-		    "_count": "desc"
-		   }
-		  }
-		 }
+			"Field names": {
+				"terms": "_field_names",
+				"size": 10
+			}
 		}
 	}
-	return body
