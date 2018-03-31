@@ -1,4 +1,4 @@
-def total_traffic_count_30m_interval():
+def total_traffic_count_15m_interval():
 	'''kibana 24hour json'''
 	body = {
 		"query": {
@@ -13,7 +13,7 @@ def total_traffic_count_30m_interval():
 		   {
 		    "range": {
 		     "@timestamp": {
-		      "gte": "now-24H",
+		      "gte": "now-7d",
 		      "lte": "now",
 		      "format": "epoch_millis"
 		     }
@@ -28,7 +28,7 @@ def total_traffic_count_30m_interval():
 		 "total_traffic": {
 		  "date_histogram": {
 		   "field": "@timestamp",
-		   "interval": "30m",
+		   "interval": "15m",
 		   "time_zone": "Pacific/Honolulu",
 		   "min_doc_count": 1
 		  }

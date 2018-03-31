@@ -1,5 +1,5 @@
 from elasticsearch import Elasticsearch
-from request_json import total_traffic_count_30m_interval, sample_json2
+from request_json import total_traffic_count_15m_interval, sample_json2
 
 import click
 import json
@@ -41,7 +41,7 @@ def search(query, raw_result):
 if __name__ == "__main__":
 	
 	client = elastic_connection_py()
-	query = total_traffic_count_30m_interval()
+	query = total_traffic_count_15m_interval()
 	result= client.search(index="*", body=query)	
 
 #	search(query)
