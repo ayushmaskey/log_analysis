@@ -2,7 +2,7 @@ from elasticsearch import Elasticsearch
 from request_json import total_traffic_count_15m_interval, sample_json2
 
 import click
-import json
+
 
 #connection to elastic_py
 def elastic_connection_py():
