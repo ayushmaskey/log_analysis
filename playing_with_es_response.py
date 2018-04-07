@@ -3,6 +3,8 @@ from json_response import response_7d_15min
 import matplotlib.pyplot as plt
 import dateutil.parser
 import numpy as np
+import pywt
+from pywt import wavedec
 
 unix_date = []
 iso8601_date = []
@@ -48,5 +50,8 @@ if __name__ == "__main__":
 	agg_list = resp_dict['aggregations']['total_traffic']['buckets']
 	agg_to_matplotlib_list(agg_list)
 	
-	line_graph(std_date,total_traffic)
+	#line_graph(std_date,total_traffic)
+	# coeff = pywt.dwt(total_traffic, 'db1', level=5
+	coeff = wavedec(total_traffic, 'db1', level=5)
+	print(coeff)
 	# agg_to_numpy_ndarray(agg_list)
