@@ -1,5 +1,5 @@
 
-def total_traffic(query_filter, start, end):
+def json_query(index, start, end):
 	'''kibana 24hour json'''
 	body = {
 		"query": {
@@ -7,7 +7,7 @@ def total_traffic(query_filter, start, end):
 		  "must": [
 		   {
 		    "query_string": {
-		     "query": query_filter,
+		     "query": index,
 		     "analyze_wildcard": "true"
 		    }
 		   },
@@ -37,3 +37,11 @@ def total_traffic(query_filter, start, end):
 		} 
 	}
 	return body
+
+
+if __name__ == "__main__":
+	ind = "*"
+	start = "now-1d"
+	end = "now"
+	j = json_query(ind, start, end)
+	print(j)
