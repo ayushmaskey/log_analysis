@@ -6,8 +6,8 @@ fileName = './pickle/test.pickle'
 
 def push_to_pickle():
 	ind = "*"
-	start = "now-2d/d"
-	end = "now-2d/d"
+	start = "now-6d/d"
+	end = "now-6d/d"
 	
 	es_traffic_pandas_pickle(fileName, ind, start, end)
 
@@ -16,4 +16,4 @@ def get_from_pickle():
 	return pd_dict
 
 if __name__ == "__main__":
-	pd_dict = unpickle_data(fileName)
+	push_to_pickle()
