@@ -1,7 +1,7 @@
 
 def json_query(index, start, end):
 	'''kibana 24hour json'''
-	body = {
+	es_request_query = {
 		"query": {
 		 "bool": {
 		  "must": [
@@ -36,7 +36,7 @@ def json_query(index, start, end):
 		 }
 		} 
 	}
-	return body
+	return es_request_query
 
 
 if __name__ == "__main__":

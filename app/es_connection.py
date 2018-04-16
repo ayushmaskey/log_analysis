@@ -10,6 +10,7 @@ def es_connect():
 
 
 def db_connect():
+	db_client = 'some database'
 	return db_client
 
 if __name__ == "__main__":
