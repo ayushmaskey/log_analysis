@@ -17,7 +17,7 @@ def get_agg_response_list_of_dict(ind, start, end ):
 
 def get_pandas_dataframe(ind, start, end):
 	lists_dict = get_agg_response_list_of_dict(ind, start, end)
-	
+
 	df = pd.DataFrame(lists_dict)
 
 	df.columns = ['total_traffic', 'unix_time', 'iso_time']
@@ -35,10 +35,11 @@ def es_traffic_pandas_pickle(fileName, ind, start, end):
 
 if __name__ == "__main__":
 
-	ind = "*"
-	start = "now-3d/d"
-	end = "now-3d/d"
-	fileName = './pickle/test.pickle'
+	for i in range(1,14):
+		ind = "*"
+		start = "now-"+str(i)+"d/d"
+		end = "now-"+str(i)+"d/d"
+		fileName = './pickle/test.pickle'
 
-	pkl = es_traffic_pandas_pickle(fileName, ind, start, end)
-	# pickle_data(fileName, df)
+		es_traffic_pandas_pickle(fileName, ind, start, end)
+	

@@ -26,6 +26,9 @@ def file_existe(fileName):
 def file_empty(fileName):
 	create_empty_dict_if_empty
 
+def file_write(fileName, pd_dict):
+	write_pickled_pandas_dict_to_file
+
 def pickle_data(fileName:
 	add_new_pickled_pandas_dataFrame_dict
 
