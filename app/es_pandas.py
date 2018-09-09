@@ -23,7 +23,7 @@ def get_pandas_dataframe(ind, start, end):
 	df.columns = ['total_traffic', 'unix_time', 'iso_time']
 	df.index = pd.to_datetime(df.iso_time)
 	df.index.names = ['DateTimeIndex']
-	df = df[['total_traffic', 'unix_time'] ]
+	df = df[['total_traffic'] ]
 
 	return df
 
@@ -35,7 +35,7 @@ def es_traffic_pandas_pickle(fileName, ind, start, end):
 
 if __name__ == "__main__":
 
-	for i in range(1,14):
+	for i in range(1,17):
 		ind = "*"
 		start = "now-"+str(i)+"d/d"
 		end = "now-"+str(i)+"d/d"

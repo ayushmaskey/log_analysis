@@ -1,20 +1,12 @@
 
-from es_pickle import unpickle_data
-from es_pandas import es_traffic_pandas_pickle
-from pprint import pprint
+from pull_pickle import get_from_pickle
+
 
 fileName = './pickle/test.pickle'
 
-def push_to_pickle():
-	ind = "*"
-	start = "now-6d/d"
-	end = "now-6d/d"
-	
-	es_traffic_pandas_pickle(fileName, ind, start, end)
-
-def get_from_pickle():
-	pd_dict = unpickle_data(fileName)
-	return pd_dict
+df = get_from_pickle()
 
 if __name__ == "__main__":
-	push_to_pickle()
+	# push_to_pickle()
+	df = get_from_pickle()
+	print(df.keys())
