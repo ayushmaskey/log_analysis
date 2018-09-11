@@ -2,7 +2,7 @@
 from es_connection import es_connect
 from es_request_json import json_query
 import pandas as pd
-from es_pickle import pickle_data
+from es_csv import append_to_csv
 
 def get_agg_response_list_of_dict(ind, start, end ):
 	
@@ -27,19 +27,22 @@ def get_pandas_dataframe(ind, start, end):
 
 	return df
 
-def es_traffic_pandas_pickle(fileName, ind, start, end):
+def es_traffic_pandas_csv(fileName, ind, start, end):
 	df = get_pandas_dataframe(ind, start, end)
-	pickle_data(fileName, df) 
-
+	append_to_csv(fileName, df)
+	# print(df)
 
 
 if __name__ == "__main__":
 
-	for i in range(1,17):
-		ind = "*"
-		start = "now-"+str(i)+"d/d"
-		end = "now-"+str(i)+"d/d"
-		fileName = './pickle/test.pickle'
 
-		es_traffic_pandas_pickle(fileName, ind, start, end)
+	ind = "*"
+	start = "now-1d/d"
+	end = "now-1d/d"
+
+	csv_file_path = '../csv/'
+	csv_file_name = 'test.csv'
+	fileName = csv_file_path + csv_file_name
+
 	
+	es_traffic_pandas_csv(fileName, ind, start, end)

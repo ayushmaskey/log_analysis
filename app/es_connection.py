@@ -14,5 +14,5 @@ def db_connect():
 	return db_client
 
 if __name__ == "__main__":
-	es = es_connect()
-	print(es)
+	elastic_connection_object = es_connect()
+	print(elastic_connection_object)

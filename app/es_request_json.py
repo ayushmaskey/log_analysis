@@ -19,7 +19,7 @@ def json_query(index, start, end):
 		      "format": "epoch_millis"
 		     }
 		    }
-		   }
+		   },
 		  ],
 		  "must_not": []
 		 }
@@ -43,5 +43,10 @@ if __name__ == "__main__":
 	ind = "*"
 	start = "now-1d"
 	end = "now"
-	j = json_query(ind, start, end)
-	print(j)
+	tag1 = "*"
+	tag2 = "*"
+	build_json_query = json_query(ind, start, end)
+	print(build_json_query)
+
+
+ 
