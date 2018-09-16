@@ -5,17 +5,19 @@ def push_to_csv(ind):
 	for i in range(1,17):
 		
 		start = "now-"+str(i)+"d"
-		end = "now"
+		end = "now-"+str(i-1)+"d"
 
-		csv_file_path = '../csv/'
-		csv_file_name = 'test.csv'
-		fileName = csv_file_path + csv_file_name
+
+		fileName, index = ind
+
+
+		# print(fileName, start, end, index)
 		
-		es_traffic_pandas_csv(fileName, ind, start, end)
+		es_traffic_pandas_csv(fileName, index, start, end)
 
 if __name__ == "__main__":
 	ind = {
-			"total": "*", 
+			"total": ["total","*"], 
 			"dhcp": "event_type:bro_dhcp",
 			"dns": "event_type:bro_dns",
 			"conn": "event_type:bro_conn",

@@ -1,8 +1,8 @@
 
 from es_connection import es_connect
-from es_request_json import json_query
+from es_request_total_json import json_query
 import pandas as pd
-from es_csv import append_to_csv
+from es_to_csv import append_to_csv
 import iso8601
 import datetime as dt
 
@@ -23,18 +23,19 @@ def get_pandas_dataframe(ind, start, end):
 
 	df = pd.DataFrame(lists_dict)
 
-	df.columns = ['total_traffic', 'unix_time', 'iso_time']	
+	df.columns = ['Total', 'unix_time', 'iso_time']	
 
-	df.index = df.iso_time.apply(iso8601.parse_date)
-	df.index.names = ['DateTimeIndex']
-	df = df[['total_traffic'] ]
+	df["iso_time"] = df.iso_time.apply(iso8601.parse_date)
+	df["Date"] = df["iso_time"].dt.date
+	df["Time"] = df["iso_time"].dt.time
+	df.index = df["Time"]
+	df = df[['Date','Total'] ]
 
 	return df
 
 def es_traffic_pandas_csv(fileName, ind, start, end):
 	df = get_pandas_dataframe(ind, start, end)
 	append_to_csv(fileName, df)
-	# print(df)
 
 
 if __name__ == "__main__":
@@ -45,10 +46,8 @@ if __name__ == "__main__":
 	end = "now"
 
 
-	csv_file_path = '../csv/'
-	csv_file_name = 'test.csv'
-	fileName = csv_file_path + csv_file_name
+	fileName = 'test'
 
 	
 	es_traffic_pandas_csv(fileName, ind, start, end)
-	# get_pandas_dataframe(ind, start, end)
+	#get_pandas_dataframe(ind, start, end)
