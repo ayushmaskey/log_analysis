@@ -1,5 +1,5 @@
-00 06 * * * cd /home/amaskey/Documents/log_analysis/app/elastic/ && ./load_daily.py >> ../../log/elastic.log 2>&1
-10 06 * * * cd /home/amaskey/Documents/log_analysis && git add --all >> ./log/elastic.log 2>&1
-11 06 * * * cd /home/amaskey/Documents/log_analysis && git commit -m "auto commit" >> ./log/elastic.log 2>&1
-12 06 * * * cd /home/amaskey/Documents/log_analysis && git push >> ./log/elastic.log 2>&1
+00 10 * * * cd /home/amaskey/Documents/log_analysis/app/elastic/ && ./load_daily.py >> ../../log/elastic.log 2>&1
+10 10 * * * cd /home/amaskey/Documents/log_analysis && git add --all >> ./log/elastic.log 2>&1
+11 10 * * * cd /home/amaskey/Documents/log_analysis && git commit -m "auto commit" >> ./log/elastic.log 2>&1
+12 10 * * * cd /home/amaskey/Documents/log_analysis && git push >> ./log/elastic.log 2>&1
 
