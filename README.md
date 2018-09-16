@@ -9,42 +9,22 @@ def es_connect():
 	return es_client_connection
 
 def db_connect():
-	if_i_use_sqlite3
+	if_I_use_sqlite3_or_any_other_Db
 ```
 
-#### es_request_json.py
+#### es_request_total_json.py
 ```python
 def json_query(index, startDate, endDate):
 	return json_structure_ready_for_es_query
 ```
 
-#### es_pickle.py
+#### es_request_protocol_json.py
+Json query for protocols different than total
 ```python
-def file_existe(fileName):
-	create_new_file_if_not_exisits
-
-def file_empty(fileName):
-	create_empty_dict_if_empty
-
-def file_write(fileName, pd_dict):
-	write_pickled_pandas_dict_to_file
-
-def pickle_data(fileName:
-	add_new_pickled_pandas_dataFrame_dict
-
-def unpickle_data(fileName:
-	return pickled_pandas_dataFrame_dict
+def json_protocol_query(index, startDate, endDate):
+	return json_structure_ready_for_es_query
 ```
 
-#### pickled data structure
-```python
-option 1: {year(int): {'monthName'(str): {'date'(date): {panda_dataframe_for_the_day} } } }
-option 2: {'date'(date): {panda_dataframe_for_the_day} }
-
-panda_dataframe_for_the_day [TimeSeriesIndex | total_traffic_count | unix_time ]
-
-option 2 for now since it is simple but maybe difficult to manage when years of data collected
-```
 
 #### es_pandas.py
 ```python
@@ -56,13 +36,37 @@ def get_agg_response_list_of_dict(ind, start, end ):
 def get_pandas_dataframe(ind, start, end):
 	return es_agg_converted_to_panda_dataframe
 
-def es_traffic_pandas_pickle(fileName, ind, start, end):
-	manages_es_request_panda_conversion_load_pickle
+def es_traffic_pandas_csv(fileName, ind, start, end):
+	manages_es_request_panda_conversion_load_csv
 
 ```
 
-#### cron job
+#### es_to_csv.py
+```python
+
+
+```
+
+#### load_one_time.py
+```python
+
+
+```
+
+#### load_daily.py
+```python
+
+
+```
+
+#### elastic.cron
+
+run load_daily.py every morning
+git add, commit and push after 10 min
+
+
 ```bash
-sudo crontab -e
-01 01 * * * python3 /full/path/to/app/load_daily.py
+crontab -e 			#edit
+crontab -l			#view
+crontab elastic.cron 		#add new cron job
 ```
