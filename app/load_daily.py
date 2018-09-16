@@ -2,17 +2,11 @@ from es_pandas import es_traffic_pandas_csv
 
 
 def push_to_csv(ind):
-	for i in range(1,17):
-		
-		start = "now-"+str(i)+"d"
-		end = "now-"+str(i-1)+"d"
-
+		start = "now-2d"
+		end = "now"
 
 		fileName, index = ind
 
-
-		# print(fileName, start, end, index)
-		
 		es_traffic_pandas_csv(fileName, index, start, end)
 
 if __name__ == "__main__":
@@ -27,4 +21,3 @@ if __name__ == "__main__":
 			"files": "event_type:bro_files",
 		}
 	push_to_csv(ind['total'])
-	# print(ind["dhcp"])

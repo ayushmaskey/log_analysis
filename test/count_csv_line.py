@@ -24,11 +24,7 @@ def file_empty(fileName):
 
 	return is_empty
 
-def line_count_97(fileName):
-	with open(fileName) as csv_file:
-		spamreader = csv.reader(csv_file)
-		row_count = sum(1 for row in spamreader)
-	return row_count == 97
+
 
 def append_to_csv(fileName, df):
 
@@ -48,7 +44,30 @@ def append_to_csv(fileName, df):
 
 			is_empty = file_empty(fileName_date)
 
-			if not line_count_97(fileName_date):
-				with open(fileName_date, 'w') as csv_file:
-					new_df.to_csv(csv_file, header = True)
+			# if is_empty:
+			with open(fileName_date, 'w') as csv_file:
+				new_df.to_csv(csv_file, header = True)
+			# else:
+			# 	with open(fileName_date, 'a') as csv_file:
+			# 		new_df.to_csv(csv_file, header = False)
 	
+
+def line_count_97(fileName):
+	with open(fileName) as csv_file:
+		spamreader = csv.reader(csv_file)
+		row_count = sum(1 for row in spamreader)
+	print(row_count)
+	return row_count == 97
+
+if __name__ == "__main__":
+
+	fileName1 = "../csv/total/total_2018-09-10.csv"
+	fileName2 = "../csv/total/total_2018-09-13.csv"
+	fileName3 = "../csv/total/total_2018-09-14.csv"
+	fileName4 = "../csv/total/total_2018-09-15.csv"
+
+
+	print(line_count_97(fileName1))
+	print(line_count_97(fileName2))
+	print(line_count_97(fileName3))
+	print(line_count_97(fileName4))
