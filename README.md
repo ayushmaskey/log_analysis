@@ -60,3 +60,9 @@ def es_traffic_pandas_pickle(fileName, ind, start, end):
 	manages_es_request_panda_conversion_load_pickle
 
 ```
+
+#### cron job
+```bash
+sudo crontab -e
+01 01 * * * python3 /full/path/to/app/load_daily.py
+```
