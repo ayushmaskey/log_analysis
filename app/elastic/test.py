@@ -15,9 +15,8 @@ def get_agg_response_list_of_dict(ind, start, end ):
 	q = json_protocol_query(ind, start , end)
 	es_response = es.search(index=all_index, body=q)
 	
-	# agg_list = es_response['aggregations']['total_traffic']['buckets']
-	pprint(es_response)
-	# return agg_list
+	agg_list = es_response['aggregations']['total_traffic']['buckets']
+	return agg_list
 
 
 def get_pandas_dataframe(ind, start, end):
@@ -25,7 +24,7 @@ def get_pandas_dataframe(ind, start, end):
 
 	df = pd.DataFrame(lists_dict)
 
-	print(df)
+	# print(df)
 	df.columns = ['Total', 'unix_time', 'iso_time']	
 
 	df["iso_time"] = df.iso_time.apply(iso8601.parse_date)
@@ -33,6 +32,7 @@ def get_pandas_dataframe(ind, start, end):
 	df["Time"] = df["iso_time"].dt.time
 	df.index = df["Time"]
 	df = df[['Date','Total'] ]
+	print(df)
 
 	return df
 
@@ -52,5 +52,5 @@ if __name__ == "__main__":
 	fileName = 'test'
 
 	
-	# es_traffic_pandas_csv(fileName, ind, start, end)
-	get_agg_response_list_of_dict(ind, start, end)
+	es_traffic_pandas_csv(fileName, ind, start, end)
+	# get_pandas_dataframe(ind, start, end)
