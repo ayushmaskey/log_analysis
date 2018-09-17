@@ -1,6 +1,6 @@
 
 from es_connection import es_connect
-from es_request_protocol_json import json_protocol_query
+from es_request_external_json import json_external_query
 import pandas as pd
 from es_to_csv import append_to_csv
 import iso8601
@@ -12,7 +12,7 @@ def get_agg_response_list_of_dict(ind, start, end ):
 	
 	all_index = "*"
 	es = es_connect()
-	q = json_protocol_query(ind, start , end)
+	q = json_external_query(ind, start , end)
 	es_response = es.search(index=all_index, body=q)
 	
 	agg_list = es_response['aggregations']['total_traffic']['buckets']
@@ -45,12 +45,12 @@ if __name__ == "__main__":
 
 
 	ind = "bro_dns"
-	start = "now-1d"
+	start = "now-5d"
 	end = "now"
 
 
 	fileName = 'test'
 
 	
-	es_traffic_pandas_csv(fileName, ind, start, end)
-	# get_pandas_dataframe(ind, start, end)
+	# es_traffic_pandas_csv(fileName, ind, start, end)
+	get_pandas_dataframe(ind, start, end)
