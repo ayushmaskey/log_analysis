@@ -2,11 +2,11 @@ from es_pandas import es_traffic_pandas_csv
 
 
 def push_to_csv(fileName, index):
-	for i in range(1,17):
-		start = "now-"+str(i)+"d"
-		end = "now"
+	# for i in range(1,17):
+	start = "now-17d"
+	end = "now"
 
-		es_traffic_pandas_csv(fileName, index, start, end)
+	es_traffic_pandas_csv(fileName, index, start, end)
 
 if __name__ == "__main__":
 	ind = {

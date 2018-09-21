@@ -1,3 +1,5 @@
+internal identified on 9/20/18 7pm
+tag:beat
 
 def json_external_query(index, start, end):
 	'''kibana 24hour json'''
@@ -46,15 +48,7 @@ def json_external_query(index, start, end):
 	        }
 	       }
 	      ],
-	      "must_not": [
-	       {
-	        "match_phrase": {
-	         "syslog-sourceip": {
-	          "query": "127.0.0.1"
-	         }
-	        }
-	       }
-	      ]
+	      "must_not": []
 	     }
 	    },
 		"size": 0,
@@ -70,6 +64,7 @@ def json_external_query(index, start, end):
 		} 
 	}
 	return es_request_query
+
 
 
 if __name__ == "__main__":

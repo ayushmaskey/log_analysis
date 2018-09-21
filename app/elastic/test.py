@@ -45,7 +45,7 @@ if __name__ == "__main__":
 
 
 	ind = "bro_dns"
-	start = "now-5d"
+	start = "now-1d"
 	end = "now"
 
 

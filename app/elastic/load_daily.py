@@ -4,10 +4,10 @@ from es_pandas import es_traffic_pandas_csv
 
 
 def push_to_csv(fileName, index):
-		start = "now-2d"
-		end = "now"
+	start = "now-2d"
+	end = "now"
 
-		es_traffic_pandas_csv(fileName, index, start, end)
+	es_traffic_pandas_csv(fileName, index, start, end)
 
 if __name__ == "__main__":
 	ind = {
