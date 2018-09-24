@@ -19,6 +19,7 @@ if __name__ == "__main__":
 			"weird": "bro_weird",
 			"http": "bro_http",
 			"files": "bro_files",
+			"external": "external"
 		}
 
 

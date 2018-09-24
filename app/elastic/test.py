@@ -1,6 +1,6 @@
 
 from es_connection import es_connect
-from es_request_external_json import json_external_query
+from test_request import json_external_query
 import pandas as pd
 from es_to_csv import append_to_csv
 import iso8601
@@ -15,8 +15,9 @@ def get_agg_response_list_of_dict(ind, start, end ):
 	q = json_external_query(ind, start , end)
 	es_response = es.search(index=all_index, body=q)
 	
-	agg_list = es_response['aggregations']['total_traffic']['buckets']
-	return agg_list
+	print(es_response)
+	# agg_list = es_response['aggregations']['total_traffic']['buckets']
+	# return agg_list
 
 
 def get_pandas_dataframe(ind, start, end):
@@ -45,7 +46,7 @@ if __name__ == "__main__":
 
 
 	ind = "bro_dns"
-	start = "now-1d"
+	start = "now-7d"
 	end = "now"
 
 
@@ -53,4 +54,4 @@ if __name__ == "__main__":
 
 	
 	# es_traffic_pandas_csv(fileName, ind, start, end)
-	get_pandas_dataframe(ind, start, end)
+	get_agg_response_list_of_dict(ind, start, end)
