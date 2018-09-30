@@ -1,5 +1,4 @@
-# internal identified on 9/20/18 7pm
-# tag:beat
+
 
 def json_external_query(index, start, end):
 	'''kibana 24hour json'''
