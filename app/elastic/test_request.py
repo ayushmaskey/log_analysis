@@ -6,40 +6,51 @@ def json_external_query(index, start, end):
 	es_request_query = {
 		"_source" : ["@timestamp", "source_ips", "destination_ips", "destination_port"],
 		"query": {
-		    "bool": {
-		      "must": [
-		        {
-		          "match_all": {}
-		        },
-		        {
-		          "match_phrase": {
-		            "tags": {
-		              "query": "external_destination"
-		            }
-		          }
-		        },
-		        {
-		          "match_phrase": {
-		            "tags": {
-		              "query": "internal_source"
-		            }
-		          }
-		        },
-		        {
-		          "range": {
-		            "@timestamp": {
-		              "gte": start,
-		              "lte": end,
-		              "format": "epoch_millis"
-		            }
-		          }
-		        }
-		      ],
-		      "filter": [],
-		      "should": [],
-		      "must_not": []
-		    }
-	    } 
+	    "bool": {
+	      "must": [
+	        {
+	          "match_all": {}
+	        },
+	        {
+	          "match_phrase": {
+	            "tags": {
+	              "query": "external_destination"
+	            }
+	          }
+	        },
+	        {
+	          "match_phrase": {
+	            "tags": {
+	              "query": "internal_source"
+	            }
+	          }
+	        },
+	        {
+	          "range": {
+	            "@timestamp": {
+	              "gte": start,
+	              "lte": end,
+	              "format": "epoch_millis"
+	            }
+	          }
+	        }
+	      ],
+	      "filter": [],
+	      "should": [],
+	      "must_not": []
+	    }
+	    },
+		"size": 0,
+		"aggs": {
+		 "total_traffic": {
+		  "date_histogram": {
+		   "field": "@timestamp",
+		   "interval": "15m",
+		   "time_zone": "Pacific/Honolulu",
+		   "min_doc_count": 1
+		  }
+		 }
+		} 
 	}
 	return es_request_query
 
