@@ -1,6 +1,6 @@
 
 from es_connection import es_connect
-from test_request import json_external_query
+from es_request_firewall_outside_json import json_firewall_outside_query
 import pandas as pd
 from es_to_csv import append_to_csv
 import iso8601
@@ -12,11 +12,20 @@ def get_agg_response_list_of_dict(ind, start, end ):
 	
 	all_index = "*"
 	es = es_connect()
-	q = json_external_query(ind, start , end)
+	q = json_firewall_outside_query(ind, start , end)
 	es_response = es.search(index=all_index, body=q)
 	
-	print(es_response)
-	# agg_list = es_response['aggregations']['total_traffic']['buckets']
+	pprint(es_response)
+	agg_list = es_response['aggregations']['dest_ip']['buckets']
+	pprint(agg_list)
+	df=pd.DataFrame(agg_list)
+	df['dest_ip'] = df.key
+	pprint(df)
+	pprint(df['dest_port'])
+	pprint(df['dest_port'][0])
+
+	agg_list2 = es_response['buckets']
+	pprint(agg_list2)
 	# return agg_list
 
 

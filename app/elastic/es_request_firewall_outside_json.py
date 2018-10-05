@@ -1,9 +1,8 @@
 
 
-def json_external_query(index, start, end):
+def json_firewall_outside_query(index, start, end):
 	'''kibana 24hour json'''
 	es_request_query = {
-		"_source" : ["@timestamp", "source_ips", "destination_ips", "destination_port"],
 		"query": {
 	    "bool": {
 	      "must": [
@@ -41,19 +40,36 @@ def json_external_query(index, start, end):
 	    },
 		"size": 0,
 		"aggs": {
-		 "total_traffic": {
-		  "date_histogram": {
-		   "field": "@timestamp",
-		   "interval": "15m",
-		   "time_zone": "Pacific/Honolulu",
-		   "min_doc_count": 1
-		  }
+		    "dest_ip": {
+		      "terms": {
+		        "field": "destination_ips.keyword",
+		        # "size": 100000,
+		        # "order": {
+		        #   "_count": "desc"
+		        # }
+		      },
+		      "aggs": {
+		        "dest_port": {
+		          "terms": {
+		            "field": "destination_port",
+		            # "size": 100000,
+		          #   "order": {
+		          #     "_count": "desc"
+		          #   }
+		          },
+		          "aggs": {
+		          	"server_name": {
+		          		"terms": {
+		          			"field": "server_name.keyword",
+		          		}
+		          	}
+		          }
+		        }
+		      }
+		    }
 		 }
-		} 
 	}
 	return es_request_query
-
-
 
 
 
@@ -65,7 +81,7 @@ if __name__ == "__main__":
 	end = "now"
 	tag1 = "*"
 	tag2 = "*"
-	build_json_query = json_external_query(ind, start, end)
+	build_json_query = json_firewall_outside_query(ind, start, end)
 	print(build_json_query)
 
 
