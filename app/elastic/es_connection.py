@@ -9,7 +9,7 @@ def es_connect():
 	<Elasticsearch([{'host': 'localhost', 'port': 9200}])>
 
 	"""
-	es_client = Elasticsearch(['http://localhost:9200/'], verify_certs=True)
+	es_client = Elasticsearch(['http://localhost:9200/'], verify_certs=True, timeout=30)
 	if not es_client.ping():
 	    raise ValueError("Connection failed")
 	return es_client

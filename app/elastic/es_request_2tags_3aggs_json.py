@@ -1,6 +1,6 @@
 
 
-def json_firewall_outside_query(index, start, end):
+def json_three_level_agg_query_two_tags( start, end, agg1, agg2, agg3, tag1, tag2):
 	'''kibana 24hour json'''
 	es_request_query = {
 		"query": {
@@ -12,14 +12,14 @@ def json_firewall_outside_query(index, start, end):
 	        {
 	          "match_phrase": {
 	            "tags": {
-	              "query": "external_destination"
+	              "query": tag1
 	            }
 	          }
 	        },
 	        {
 	          "match_phrase": {
 	            "tags": {
-	              "query": "internal_source"
+	              "query": tag2
 	            }
 	          }
 	        },
@@ -42,8 +42,8 @@ def json_firewall_outside_query(index, start, end):
 		"aggs": {
 		    "dest_ip": {
 		      "terms": {
-		        "field": "destination_ips.keyword",
-		        # "size": 100000,
+		        "field": agg1,
+		        # "size": 20000,
 		        # "order": {
 		        #   "_count": "desc"
 		        # }
@@ -51,16 +51,15 @@ def json_firewall_outside_query(index, start, end):
 		      "aggs": {
 		        "dest_port": {
 		          "terms": {
-		            "field": "destination_port",
-		            # "size": 100000,
-		          #   "order": {
-		          #     "_count": "desc"
-		          #   }
+		            "field": agg2,
+		            # "size": 1000,
 		          },
 		          "aggs": {
 		          	"server_name": {
 		          		"terms": {
-		          			"field": "server_name.keyword",
+		          			"field": agg3,
+		            		# "size": 1000,
+
 		          		}
 		          	}
 		          }
