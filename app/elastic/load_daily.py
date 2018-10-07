@@ -37,8 +37,8 @@ def load_main():
 	start = "now-2d"
 	end = "now"
 
-	es_simple_agg(start, end)
-	# es_3agg_2tag_agg(start, end)
+	# es_simple_agg(start, end)
+	es_3agg_2tag_agg(start, end)
 
 	print("daily load on", dt.datetime.now() ,"successful!!")
 
