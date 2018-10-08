@@ -103,3 +103,4 @@ ENV/
 #ignore internal structure
 /csv/internal_dst
 /csv/external_dst
+/log

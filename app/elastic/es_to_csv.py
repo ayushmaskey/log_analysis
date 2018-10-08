@@ -88,14 +88,13 @@ def append_nested_aggs_to_csv(fileName, df):
 				if not old_df.empty:
 					old_df.index = old_df['sha1']
 					old_df = old_df[["dest_ip", "dest_port", "URL"]]
-					print(old_df)
-					print(df)
-					# new_df = pd.concat(df, old_df)
-					# .drop_duplicates()
+					new_df = pd.concat([df, old_df])
+					new_df.drop_duplicates(keep = 'first', inplace=True)
+					# print(new_df)
 			else:
 				new_df = df	
 
 
-			# with open(full_path, 'w') as csv_file:
-			# 		new_df.to_csv(csv_file, header = True)
+			with open(full_path, 'w') as csv_file:
+					new_df.to_csv(csv_file, header = True)
 

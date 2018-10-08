@@ -22,12 +22,12 @@ def threeAggs_2Tags():
 			 "external_destination",
 			 "internal_source"
 		],
-		"internal_dst": [
-			"destination_ips.keyword",
-			 "destination_port",
-			 "server_name.keyword",
-			 "internal_destination",
-			 "internal_source"
-		]
+		# "internal_dst": [
+		# 	"destination_ips.keyword",
+		# 	 "destination_port",
+		# 	 "server_name.keyword",
+		# 	 "internal_destination",
+		# 	 "internal_source"
+		# ]
 	}
 	return ind
