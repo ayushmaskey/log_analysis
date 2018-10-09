@@ -94,7 +94,7 @@ def es_traffic_pandas_csv(ind, start, end):
 
 
 #public API -->three Level --> 
-def es_nested_agg_pandas(start, end, fn_for_json_query):
+def es_nested_agg_pandas(start, end, fn_for_json_query, traffic_type):
 	"""connect to elastic
 		import aggregate structure and json structure for stackoverflow function
 		the return dataframe fron that function is cleaned up
@@ -105,18 +105,16 @@ def es_nested_agg_pandas(start, end, fn_for_json_query):
 	aggStructure = agg_firewall_external_dest()
 
 	q = fn_for_json_query(start, end)
-	print(q)
 
 	es_response = es.search(index="*", body=q)
 	agg_list = es_response['aggregations']
 
-	print(es_response)
 	df = elasticAggsToDataframe(agg_list, aggStructure)
-	if fn_for_json_query == "external_destination":
-		df['URL'] = [domain_name(val) for val in df['server_name'] ]
-	elif fn_for_json_query == "json_internal_to_internal":
-		df['URL'] = [val.replace(".kphc.org","") for val in df['server_name']]
 
+	if  traffic_type == "iSrc_eDst":
+		df['URL'] = [domain_name(val) for val in df['server_name'] ]
+	elif traffic_type == "iSrc_iDst":
+		df['URL'] = [val.lower().replace(".kphc.org","") for val in df['server_name']]
 
 	df['sha1'] = [sha1(str(val).encode('utf-8')).hexdigest() for val in df['dest_ip']]
 	df.index = df['sha1']
@@ -135,8 +133,11 @@ def test_main():
 def test2():
 	start = "now-2d"
 	end = "now"
-	df = es_nested_agg_pandas(start, end, json_internal_to_internal)
-	print(df)
+	df1 = es_nested_agg_pandas(start, end, json_internal_to_external, "iSrc_eDst")
+	# df2 = es_nested_agg_pandas(start, end, json_internal_to_internal, "iSrc_iDst")
+
+	print(df1)
+	# print(df1)
 
 if __name__ == "__main__":
 

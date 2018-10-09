@@ -10,15 +10,6 @@ def json_internal_to_internal( start, end):
 		          "match_all": {}
 		        },
 		        {
-		          "range": {
-		            "@timestamp": {
-		              "gte": start,
-		              "lte": end,
-		              "format": "epoch_millis"
-		            }
-		          }
-		        },
-		        {
 		          "bool": {
 		            "should": [
 		              {
@@ -59,7 +50,16 @@ def json_internal_to_internal( start, end):
 		              }
 		            ]
 		          }
-		        }
+		        },
+		        {
+		          "range": {
+		            "@timestamp": {
+		              "gte": start,
+		              "lte": end,
+		              "format": "epoch_millis"
+		            }
+		          }
+		        },
 		      ],
 		      "filter": [],
 		      "should": [],
@@ -71,8 +71,8 @@ def json_internal_to_internal( start, end):
 		"aggs": {
 		    "dest_ip": {
 		      "terms": {
-		        "field": "dest_ip",
-		        # "size": 20000,
+		        "field": "destination_ips.keyword",
+		        "size": 1000000,
 		        # "order": {
 		        #   "_count": "desc"
 		        # }
@@ -80,13 +80,13 @@ def json_internal_to_internal( start, end):
 		      "aggs": {
 		        "dest_port": {
 		          "terms": {
-		            "field": "dest_port",
-		            # "size": 1000,
+		            "field": "destination_port",
+		            # "size": 10,
 		          },
 		          "aggs": {
 		          	"server_name": {
 		          		"terms": {
-		          			"field": "server_name",
+		          			"field": "server_name.keyword",
 		            		# "size": 1000,
 
 		          		}
@@ -170,8 +170,8 @@ def json_internal_to_external( start, end):
 		"aggs": {
 		    "dest_ip": {
 		      "terms": {
-		        "field": "dest_ip",
-		        # "size": 20000,
+		        "field": "destination_ips.keyword",
+		        "size": 200000,
 		        # "order": {
 		        #   "_count": "desc"
 		        # }
@@ -179,13 +179,13 @@ def json_internal_to_external( start, end):
 		      "aggs": {
 		        "dest_port": {
 		          "terms": {
-		            "field": "dest_port",
+		            "field": "destination_port",
 		            # "size": 1000,
 		          },
 		          "aggs": {
 		          	"server_name": {
 		          		"terms": {
-		          			"field": "server_name",
+		          			"field": "server_name.keyword",
 		            		# "size": 1000,
 
 		          		}
