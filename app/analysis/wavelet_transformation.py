@@ -4,9 +4,10 @@ from pprint import pprint
 
 from csv_to_pandas import dictionary_of_dataframes
 
-
-def single_level_DWT_fxn(data_list,wavelet_to_use):
-	(cA, cD) = pywt.dwt(data_list, wavelet_to_use)
+def multi_level_DWT_fxn(data_list, wavelet_to_use, level):
+	coeff = pywt.wavedec(data_list, wavelet_to_use, level=level)
+	cA = coeff[0]
+	# print(coeff[0])
 	return cA
 
 
@@ -33,14 +34,14 @@ def dictOfDF_into_dictOfProtocol_dictOfDate_listOfTotal():
 	return dict_protocol_with_nested_list_each_nested_list_is_a_day
 
 
-def dictOdDictOfList_rawNumber_to_DWTApprox(wavelet_fxn, wavelet_to_use):
+def dictOdDictOfList_rawNumber_to_DWTApprox(wavelet_to_use, level):
 	dict_dict_list = dictOfDF_into_dictOfProtocol_dictOfDate_listOfTotal()
 	
 	# print(dict_dict_list['total']['2018-10-17'])
 	for dict_list_key, dict_list_value in dict_dict_list.items():
 		for list_key, list_value in dict_dict_list[dict_list_key].items(): 
 			
-			wavelet_array = wavelet_fxn(dict_dict_list[dict_list_key][list_key], wavelet_to_use)
+			wavelet_array = multi_level_DWT_fxn(dict_dict_list[dict_list_key][list_key], wavelet_to_use, level)
 			wavelet_list = wavelet_array.tolist()
 			dict_dict_list[dict_list_key][list_key] = wavelet_list 
 
@@ -53,7 +54,15 @@ def dictOdDictOfList_rawNumber_to_DWTApprox(wavelet_fxn, wavelet_to_use):
 
 def test():
 	wavelet_to_use = 'db1'
-	dictOdDictOfList_rawNumber_to_DWTApprox(single_level_DWT_fxn, wavelet_to_use)
+	level = 1
+	dict_dict_list = dictOfDF_into_dictOfProtocol_dictOfDate_listOfTotal()
+	wavelet_array = multi_level_DWT_fxn(dict_dict_list['total']['2018-10-19'], wavelet_to_use, level)
+
+
+	# dictOdDictOfList_rawNumber_to_DWTApprox(multi_level_DWT_fxn, wavelet_to_use, 1)
+	print("\n\r\n\r\n\r")
+	wavelet_array = single_level_DWT_fxn(dict_dict_list['total']['2018-10-19'], wavelet_to_use, level)
+	# dictOdDictOfList_rawNumber_to_DWTApprox(single_level_DWT_fxn, wavelet_to_use, 1)
 
 
 

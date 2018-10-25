@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 from csv_to_pandas import dictionary_of_dataframes
-from wavelet_transformation import dictOdDictOfList_rawNumber_to_DWTApprox, single_level_DWT_fxn
+from wavelet_transformation import dictOdDictOfList_rawNumber_to_DWTApprox
 
 import sys
 sys.path.append('../elastic/')
@@ -19,12 +19,13 @@ def plot_graph_and_save(root, df_dict, identifier):
 	
 		for keys in key_list:
 			df_dict[keys].plot(legend = False)
-			plt.title(keys + "_traffic" + identifier)
+			plt.title(keys + "traffic" + identifier)
 			fileName = save_dir + keys + identifier + ".png"
 
 			if file_exists(fileName):
 				plt.savefig(fileName)
 			# plt.show()
+			plt.close()
 	return
 
 
@@ -39,10 +40,11 @@ def time_series_graph(root):
 
 def single_level_DWT(root):
 	wavelet_to_use = 'db1'
-	df_dict = dictOdDictOfList_rawNumber_to_DWTApprox(single_level_DWT_fxn, wavelet_to_use)
+	for i in range(1,5):
+		df_dict = dictOdDictOfList_rawNumber_to_DWTApprox(wavelet_to_use, i)
 
-	identifier = "_single_level_DWT"
-	plot_graph_and_save(root, df_dict, identifier)
+		identifier = "_discrete_wavelet_transform_level_" + str(i)
+		plot_graph_and_save(root, df_dict, identifier)
 
 
 
