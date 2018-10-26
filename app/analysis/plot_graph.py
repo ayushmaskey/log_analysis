@@ -40,7 +40,7 @@ def time_series_graph(root):
 
 def single_level_DWT(root):
 	wavelet_to_use = 'db1'
-	for i in range(1,6):
+	for i in range(1,7):
 		df_dict = dictOdDictOfList_rawNumber_to_DWTApprox(wavelet_to_use, i)
 
 		identifier = "_discrete_wavelet_transform_level_" + str(i)
