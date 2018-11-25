@@ -1,0 +1,20 @@
+Help on module es_connection:
+
+NAME
+    es_connection
+
+FUNCTIONS
+    es_connect()
+        Connects to elastic on localhost and returns client object
+        
+        Usage:
+        >>> es_client = Elasticsearch(['http://localhost:9200/'], verify_certs=True)
+        >>> type(es_client)
+        <class 'elasticsearch.client.Elasticsearch'>
+        >>> es_client
+        <Elasticsearch([{'host': 'localhost', 'port': 9200}])>
+
+FILE
+    /home/amaskey/Documents/google/Thesis_Masters/log_analysis/app/elastic/es_connection.py
+
+

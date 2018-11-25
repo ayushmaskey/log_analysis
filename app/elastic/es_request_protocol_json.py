@@ -1,4 +1,3 @@
-
 def json_protocol_query(index, start, end):
 	'''kibana 24hour json'''
 	
