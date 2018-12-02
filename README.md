@@ -3,16 +3,18 @@ elasticsearch network log analysis
 
 ## app
 
+### elastic
+
 #### es_connection.py
 ```python
 def es_connect():
 	return es_client_connection
 
-def db_connect():
-	if_I_use_sqlite3_or_any_other_Db
 ```
 
 #### es_request_total_json.py
+
+Index = *
 ```python
 def json_query(index, startDate, endDate):
 	return json_structure_ready_for_es_query
@@ -20,6 +22,7 @@ def json_query(index, startDate, endDate):
 
 #### es_request_protocol_json.py
 Json query for protocols different than total
+index = {dns, dhcp...}
 ```python
 def json_protocol_query(index, startDate, endDate):
 	return json_structure_ready_for_es_query
@@ -30,11 +33,20 @@ def json_protocol_query(index, startDate, endDate):
 ```python
 import es_connection, es_request_json, es_pickle
 
-def get_agg_response_list_of_dict(ind, start, end ):
-	return agg_es_data_15min_interval
+def domain_name(str):
+	return domain name like google.com
+
+def elasticAggsToDataframe(elasticResult,aggStructure,record={},fulllist=[]):
+	flatten nested aggs response from elastic: stackoverflow
 
 def get_pandas_dataframe(ind, start, end):
 	return es_agg_converted_to_panda_dataframe
+
+
+def get_agg_response_list_of_dict(ind, start, end ):
+	return agg_es_data_15min_interval
+
+
 
 def es_traffic_pandas_csv(fileName, ind, start, end):
 	manages_es_request_panda_conversion_load_csv
