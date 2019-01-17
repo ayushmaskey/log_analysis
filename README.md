@@ -6,15 +6,17 @@ elasticsearch network log analysis
 ### elastic
 
 #### es_connection.py
->>> connect to elastic
+> connect to elastic
 ```python
 def es_connect():
 	return es_client_connection
 
 ```
 
+---
+
 #### es_request_total_json.py
->>> build json for total traffic with index = *
+> build json for total traffic with index = *
 ```python
 def json_query(index, startDate, endDate):
 	return json_structure_ready_for_es_query
