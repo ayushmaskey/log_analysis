@@ -1,4 +1,3 @@
-
 def json_query(index, start, end):
 	'''kibana 24hour json'''
 	es_request_query = {

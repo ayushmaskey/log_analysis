@@ -57,7 +57,7 @@ if __name__ == "__main__":
 	end = "now"
 	tag1 = "*"
 	tag2 = "*"
-	build_json_query = json_query(ind, start, end)
+	build_json_query = json_protocol_query(ind, start, end)
 	print(build_json_query)
 
 
