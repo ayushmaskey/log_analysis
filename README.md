@@ -11,24 +11,27 @@
 python3 -m doctest -v es_connection.py
 ```
 #### elastic.cron
-*run load_daily.py every morning
-*git add, commit and push after 10 min
-*generates log for run and git in elastic.log
+
+* load_daily.py every morning
+* git add, commit and push after 10 min
+* generates log for run and git in elastic.log
 ```bash
 crontab -e 			#edit
 crontab -l			#view
 crontab elastic.cron 		#add new cron job
 ```
 ---
+
 #### load_one_time.py
 * run last 17 days on es_traffic_pandas_csv as a one time thing for all protocol
 * the function called returns pandas dataframe.
 * something was probably changed and for load_daily but not load_one_time probably not updated
-*???
+* ???
 ```python
 def push_to_csv
 ```
 ---
+
 #### load_daily.py
 * get single level indices from es_index_fileName
 * call es_traffic_pandas_csv to get dataframe
@@ -50,6 +53,7 @@ def es_simple_agg
 def es_3agg_2tag_agg
 ```
 ---
+
 #### es_index_fileName
 * single level has simple indexes, like total, dns, dhcp etc
 * threeAggs - not sure
@@ -58,6 +62,7 @@ def single_level_query
 def threeAggs_2Tags
 ```
 ---
+
 #### es_pandas.py
 > strip complex url to get domain name
 ```python
