@@ -45,7 +45,7 @@ def combine_all_csv_to_one_df_per_protcol(one_subfolder):
 
 	df_combined = df_list[i] 
 	for i in range(1, len(df_list)):
-		df_combined = pd.concat([df_combined, df_list[i]], axis = 1)
+		df_combined = pd.concat([df_combined, df_list[i]], axis = 1, sort=True)
  		
 
 	df_combined.fillna(0, inplace = True)
@@ -93,4 +93,9 @@ def test():
 
 if __name__ == "__main__":
 
-	test()
+	# test()
+
+	# print dataframe with column names sorted alphabetically 
+	df = combine_all_csv_to_one_df_per_protcol('../../csv/total')
+	df = df.reindex(sorted(x.columns), axis=1)
+	print(df)
