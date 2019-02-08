@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 from csv_to_pandas import dictionary_of_dataframes
-from wavelet_transformation import dictOdDictOfList_rawNumber_to_DWTApprox
+from wavelet_transformation import dictOfDictOfList_rawNumber_to_DWTApprox
 
 import sys
 sys.path.append('../elastic/')
@@ -43,7 +43,7 @@ def wavelet_tranformation_DWT(level):
 	#plot graph after multiple levels of transformation
 	wavelet_to_use = 'db1'
 	for i in range(1,level):
-		df_dict = dictOdDictOfList_rawNumber_to_DWTApprox(wavelet_to_use, i)
+		df_dict = dictOfDictOfList_rawNumber_to_DWTApprox(wavelet_to_use, i)
 
 		identifier = "_discrete_wavelet_transform_level_" + str(i)
 		plot_graph_and_save(df_dict, identifier)

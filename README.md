@@ -24,38 +24,75 @@ from es_to_csv import dir_exists, file_exists
 ```python
 def wavelet_tranformation_DWT(level):
 ```
-# first plot without any transformation 
+> first plot without any transformation 
 * get dictionary of dataframe from csv_to_pandas file using dictionary_of_dataframes function
 * no wavelet transformation 
 * pass the dataframe to plot_graph_and_save
 
-# then plot wavelet transformed data for the range 1 to level
+> then plot wavelet transformed data for the range 1 to level
 * get tranformed data from wavelet_transform file using dictOdDictOfList_rawNumber_to_DWTApprox function
 * pass each transformed dataframe to plot_graph_save
 
 ```python
 def plot_graph_and_save(df_dict, identifier):
 ```
-* plot folder likes in the root of the project
-
-
+* takes a dictionary of dataframe and id to name the file
+* get the keys of dict which is protocols and convert into list
+* make sure dictectory to save exists
+* for each key in dict which is protocol
+* take the value which is dataframe 
+* and plot it
+* each line in the plot is a column of dataframe which is one day of data.
+* remove the legend coz too many days which creates long list of legend
+* save the plot in a file
 
 ---
 ---
 
 #### wavelet_transformation.py
-> wavelet transformation using db1
+> too many transformation between data types: csv, list, dict, dataframe and nest combination of those.
+
+```python
+import pandas as pd
+import pywt
+from pprint import pprint
+
+from csv_to_pandas import dictionary_of_dataframes
+```
 ```python
 def dictOdDictOfList_rawNumber_to_DWTApprox(wavelet_to_use, level):
 ```
+* call dictOfDF_into_dictOfProtocol_dictOfDate_listOfTotal to get dict of dict of list
+* for loop on each key, value pair of dict of dict of list
+* nested for loop for second dict of dict_of_dict_of_list
+* pass this list along with wavelet type and level of transformation to call multi_level_DWT_fxn
+* multi_level_DWT_fxn return array of cD
+* convert this cD array into list and replace the original list
+* transform back to dict of combined dataframe
+* return this new dict of dataframe which kept its name dict_dict_list making things a little confusing
 
 ```python
 def multi_level_DWT_fxn(data_list, wavelet_to_use, level):
 ```
+* takes the list for wavelet transformation to given level 
+* trasnformation returns cD (detail coeff) and cA (approximation coeff)
+* cA discarded??, need to better use this
+* array cD returned
 
 ```python
 def dictOfDF_into_dictOfProtocol_dictOfDate_listOfTotal():
 ```
+* get dictionary of dataframe from csv_to_pandas file using dictionary_of_dataframes function
+* get the keys of the dict into a list which is list of protocols
+* for each protocol get the dataframe from dict value
+* get columns names of that dataframe which is date into a list
+* now nested loop, for each date in that list of dates make a dictionary
+* dict key: protocol
+* dict value: another dict (dict2)
+* dict2 key: date
+* dict2 value: list of data for the day
+* return this dict of dict of list
+
 ---
 ---
 
