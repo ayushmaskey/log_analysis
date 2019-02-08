@@ -6,9 +6,9 @@ from csv_to_pandas import dictionary_of_dataframes
 
 def multi_level_DWT_fxn(data_list, wavelet_to_use, level):
 	coeff = pywt.wavedec(data_list, wavelet_to_use, level=level)
-	cD = coeff[0]
+	cA = coeff[0]
 	# print(cD)
-	return cD
+	return cA
 
 
 def dictOfDF_into_dictOfProtocol_dictOfDate_listOfTotal():

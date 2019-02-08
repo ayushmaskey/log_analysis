@@ -1,6 +1,30 @@
 # log_analysis
 >elasticsearch network log analysis
 
+
+## TO DO multi_level_DWT_fxn in wavelet_transformation.py
+
+1. k means 
+  * on data without transformation
+  * on data with db1 transformation
+  * cD of db1 transformation
+  * cA and cD of haar transoformation
+3. test the experiment
+  * training data
+  * test data
+  * live experiment with kali
+2. add some other type of wavelet transformation, 
+  * maybe haar
+  * right now using db1
+3. USE cD from wavelet transformation
+  * cD being discarded right now
+  * for level 1 tranform one array of cD
+  * for level 2 transform two array of cD
+  * need to better use this cD
+  * need to figure out dynamically how many cD are coming
+  * combine all cD into one array and that could be one more data point for plotting and k-means
+
+
 ---
 ---
 ## app
@@ -66,8 +90,8 @@ def dictOdDictOfList_rawNumber_to_DWTApprox(wavelet_to_use, level):
 * for loop on each key, value pair of dict of dict of list
 * nested for loop for second dict of dict_of_dict_of_list
 * pass this list along with wavelet type and level of transformation to call multi_level_DWT_fxn
-* multi_level_DWT_fxn return array of cD
-* convert this cD array into list and replace the original list
+* multi_level_DWT_fxn return array of cA
+* convert this cA array into list and replace the original list
 * transform back to dict of combined dataframe
 * return this new dict of dataframe which kept its name dict_dict_list making things a little confusing
 
@@ -76,8 +100,10 @@ def multi_level_DWT_fxn(data_list, wavelet_to_use, level):
 ```
 * takes the list for wavelet transformation to given level 
 * trasnformation returns cD (detail coeff) and cA (approximation coeff)
-* cA discarded??, need to better use this
-* array cD returned
+* array of cA returned
+* cD discarded
+
+
 
 ```python
 def dictOfDF_into_dictOfProtocol_dictOfDate_listOfTotal():
