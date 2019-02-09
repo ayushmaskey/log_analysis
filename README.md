@@ -1,27 +1,186 @@
 # log_analysis
 >elasticsearch network log analysis
 
+
+## TO DO multi_level_DWT_fxn in wavelet_transformation.py
+
+1. k means 
+  * on data without transformation
+  * on data with db1 transformation
+  * cD of db1 transformation
+  * cA and cD of haar transoformation
+3. test the experiment
+  * training data
+  * test data
+  * live experiment with kali
+2. add some other type of wavelet transformation, 
+  * maybe haar
+  * right now using db1
+3. USE cD from wavelet transformation
+  * cD being discarded right now
+  * for level 1 tranform one array of cD
+  * for level 2 transform two array of cD
+  * need to better use this cD
+  * need to figure out dynamically how many cD are coming
+  * combine all cD into one array and that could be one more data point for plotting and k-means
+
+
 ---
 ---
 ## app
 
 ### analysis
 
-#### csv_to_pandas.py
-```python
-```
-
 #### plot_graph.py
+> create 6 level of wavelet transformation and save the graph
 ```python
+import pandas as pd
+import matplotlib.pyplot as plt
+
+from csv_to_pandas import dictionary_of_dataframes
+from wavelet_transformation import dictOdDictOfList_rawNumber_to_DWTApprox
+
+import sys
+sys.path.append('../elastic/')
+from es_to_csv import dir_exists, file_exists
 ```
 
+```python
+def wavelet_tranformation_DWT(level):
+```
+> first plot without any transformation 
+* get dictionary of dataframe from csv_to_pandas file using dictionary_of_dataframes function
+* no wavelet transformation 
+* pass the dataframe to plot_graph_and_save
+
+> then plot wavelet transformed data for the range 1 to level
+* get tranformed data from wavelet_transform file using dictOdDictOfList_rawNumber_to_DWTApprox function
+* pass each transformed dataframe to plot_graph_save
+
+```python
+def plot_graph_and_save(df_dict, identifier):
+```
+* takes a dictionary of dataframe and id to name the file
+* get the keys of dict which is protocols and convert into list
+* make sure dictectory to save exists
+* for each key in dict which is protocol
+* take the value which is dataframe 
+* and plot it
+* each line in the plot is a column of dataframe which is one day of data.
+* remove the legend coz too many days which creates long list of legend
+* save the plot in a file
+
+---
+---
 
 #### wavelet_transformation.py
+> too many transformation between data types: csv, list, dict, dataframe and nest combination of those.
+
 ```python
+import pandas as pd
+import pywt
+from pprint import pprint
+
+from csv_to_pandas import dictionary_of_dataframes
 ```
+```python
+def dictOdDictOfList_rawNumber_to_DWTApprox(wavelet_to_use, level):
+```
+* call dictOfDF_into_dictOfProtocol_dictOfDate_listOfTotal to get dict of dict of list
+* for loop on each key, value pair of dict of dict of list
+* nested for loop for second dict of dict_of_dict_of_list
+* pass this list along with wavelet type and level of transformation to call multi_level_DWT_fxn
+* multi_level_DWT_fxn return array of cA
+* convert this cA array into list and replace the original list
+* transform back to dict of combined dataframe
+* return this new dict of dataframe which kept its name dict_dict_list making things a little confusing
+
+```python
+def multi_level_DWT_fxn(data_list, wavelet_to_use, level):
+```
+* takes the list for wavelet transformation to given level 
+* trasnformation returns cD (detail coeff) and cA (approximation coeff)
+* array of cA returned
+* cD discarded
+
+
+
+```python
+def dictOfDF_into_dictOfProtocol_dictOfDate_listOfTotal():
+```
+* get dictionary of dataframe from csv_to_pandas file using dictionary_of_dataframes function
+* get the keys of the dict into a list which is list of protocols
+* for each protocol get the dataframe from dict value
+* get columns names of that dataframe which is date into a list
+* now nested loop, for each date in that list of dates make a dictionary
+* dict key: protocol
+* dict value: another dict (dict2)
+* dict2 key: date
+* dict2 value: list of data for the day
+* return this dict of dict of list
 
 ---
 ---
+
+
+#### csv_to_pandas.py
+```python
+import pandas as pd
+import os
+import matplotlib.pyplot as plt
+```
+
+
+```python
+def dictionary_of_dataframes():
+```
+* calls get_sub_directories_into_list to get list of dir path and dir
+* calls combine_all_csv_to_one_df_per_protcol to get one combined dataframe per protocol
+* get combined dataframe for all protocol and make a dictionary
+* key of dict: protocol name
+* value of dict: combine dataframe for the protocol
+* return this massive dict
+
+
+```python
+def combine_all_csv_to_one_df_per_protcol(one_subfolder):
+```
+* calls get_all_fileNames_inside_folders to get all files in the one_subfolder
+* calls make_list_of_dataframe_from_fileNames to get a list of dataframe for files in each subfolder
+* takes the list of dataframe and combines into one dataframe
+* index is still time of day at 15 minute interval
+* each column of dataframe is traffic for the day. 
+* column header is the date starting from 8-30-18 to today
+* return the combined dataframe
+
+```python
+def make_list_of_dataframe_from_fileNames(files_with_path):
+```
+* calls make_dataframe_from_csv to  convert data of each files into dataframe
+* does the same for all files in that folder and appends them all to a list
+
+```python
+def make_dataframe_from_csv(file):
+```
+* get the csv file from the input file with full path name
+* convert into dataframe with time as index and total traffic as column
+
+```python
+def get_all_fileNames_inside_folders(one_subfolder):
+```
+* returns all the file inside the folder
+* all files in full pathname starting from root of the project
+
+```python
+def get_sub_directories_into_list(path):
+```
+* traverses through csv folder to get sub folders 
+* returns a list of directory path and list of directory
+---
+---
+
+
+
 
 ### elastic
 

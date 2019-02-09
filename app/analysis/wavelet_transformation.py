@@ -6,9 +6,9 @@ from csv_to_pandas import dictionary_of_dataframes
 
 def multi_level_DWT_fxn(data_list, wavelet_to_use, level):
 	coeff = pywt.wavedec(data_list, wavelet_to_use, level=level)
-	cD = coeff[0]
-	print(cD)
-	return cD
+	cA = coeff[0]
+	# print(cD)
+	return cA
 
 
 def dictOfDF_into_dictOfProtocol_dictOfDate_listOfTotal():
@@ -17,24 +17,23 @@ def dictOfDF_into_dictOfProtocol_dictOfDate_listOfTotal():
 
 	# print(df_dict['total']['2018-09-13'].head(5))
 
-	dict_protocol_with_nested_list_each_nested_list_is_a_day = {}
+	dict_protocol_of_dict_date_of_list_of_data_for_day = {}
 
 	for proto in protocol_list:
 		date_list = list(df_dict[proto])
 
-		dict_protocol_with_nested_list_each_nested_list_is_a_day[proto] = {}
+		dict_protocol_of_dict_date_of_list_of_data_for_day[proto] = {}
 
 		for date in date_list:
-			dict_key = proto + "_" + date
 
 			proto_date_list = df_dict[proto][date].tolist()
 
-			dict_protocol_with_nested_list_each_nested_list_is_a_day[proto][date] = proto_date_list
+			dict_protocol_of_dict_date_of_list_of_data_for_day[proto][date] = proto_date_list
 
-	return dict_protocol_with_nested_list_each_nested_list_is_a_day
+	return dict_protocol_of_dict_date_of_list_of_data_for_day
 
 
-def dictOdDictOfList_rawNumber_to_DWTApprox(wavelet_to_use, level):
+def dictOfDictOfList_rawNumber_to_DWTApprox(wavelet_to_use, level):
 	dict_dict_list = dictOfDF_into_dictOfProtocol_dictOfDate_listOfTotal()
 	
 	# print(dict_dict_list['total']['2018-10-17'])
@@ -56,7 +55,9 @@ def test():
 	wavelet_to_use = 'db1'
 	level = 1
 	dict_dict_list = dictOfDF_into_dictOfProtocol_dictOfDate_listOfTotal()
-	wavelet_array = multi_level_DWT_fxn(dict_dict_list['total']['2018-10-19'], wavelet_to_use, level)
+	from pprint import pprint
+	pprint(dict_dict_list['total'])
+	# wavelet_array = multi_level_DWT_fxn(dict_dict_list['total']['2018-10-19'], wavelet_to_use, level)
 
 
 	# dictOdDictOfList_rawNumber_to_DWTApprox(multi_level_DWT_fxn, wavelet_to_use, 1)
