@@ -53,7 +53,7 @@ def combine_all_csv_to_one_df_per_protcol(one_subfolder):
 	return df_combined
 
 
-def dictionary_of_dataframes():
+def csv_into_dict_of_data():
 	csv_path = "../../csv"
 	dir_path_list, dir_list = get_sub_directories_into_list(csv_path)
 		
