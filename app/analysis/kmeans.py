@@ -8,7 +8,7 @@ from sklearn.cluster import KMeans, MeanShift
 from csv_to_pandas import dictionary_of_dataframes
 
 #dict of dataframe after transformation
-from wavelet_transformation import dictOfDictOfList_rawNumber_to_DWTApprox
+from wavelet_transformation import csv_into_wavelet_transformed_dict_of_dataframe
 
 #number of k for kmeans elbow
 start = 1
@@ -85,7 +85,7 @@ if __name__ == "__main__":
 	key_list = list(df_dict.keys())
 
 
-	df = df_dict['dns']
+	df = df_dict['dhcp']
 	num_clusters = 3
 
 	# find_k_for_KMeans_elbow_method2(df)

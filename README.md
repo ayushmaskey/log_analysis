@@ -37,7 +37,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from csv_to_pandas import dictionary_of_dataframes
+from csv_to_pandas import csv_into_dict_of_data
 from wavelet_transformation import dictOdDictOfList_rawNumber_to_DWTApprox
 
 import sys
@@ -49,7 +49,7 @@ from es_to_csv import dir_exists, file_exists
 def wavelet_tranformation_DWT(level):
 ```
 > first plot without any transformation 
-* get dictionary of dataframe from csv_to_pandas file using dictionary_of_dataframes function
+* get dictionary of dataframe from csv_to_pandas file using csv_into_dict_of_data function
 * no wavelet transformation 
 * pass the dataframe to plot_graph_and_save
 
@@ -81,10 +81,10 @@ import pandas as pd
 import pywt
 from pprint import pprint
 
-from csv_to_pandas import dictionary_of_dataframes
+from csv_to_pandas import csv_into_dict_of_data
 ```
 ```python
-def dictOdDictOfList_rawNumber_to_DWTApprox(wavelet_to_use, level):
+def csv_into_wavelet_transformed_dict_of_dataframe(wavelet_to_use, level):
 ```
 * call dictOfDF_into_dictOfProtocol_dictOfDate_listOfTotal to get dict of dict of list
 * for loop on each key, value pair of dict of dict of list
@@ -106,9 +106,9 @@ def multi_level_DWT_fxn(data_list, wavelet_to_use, level):
 
 
 ```python
-def dictOfDF_into_dictOfProtocol_dictOfDate_listOfTotal():
+def dict_of_df_into_dict_of_dict_of_list():
 ```
-* get dictionary of dataframe from csv_to_pandas file using dictionary_of_dataframes function
+* get dictionary of dataframe from csv_to_pandas file using csv_into_dict_of_data function
 * get the keys of the dict into a list which is list of protocols
 * for each protocol get the dataframe from dict value
 * get columns names of that dataframe which is date into a list
@@ -132,7 +132,7 @@ import matplotlib.pyplot as plt
 
 
 ```python
-def dictionary_of_dataframes():
+def csv_into_dict_of_data():
 ```
 * calls get_sub_directories_into_list to get list of dir path and dir
 * calls combine_all_csv_to_one_df_per_protcol to get one combined dataframe per protocol

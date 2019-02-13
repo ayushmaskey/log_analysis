@@ -2,7 +2,7 @@ import pandas as pd
 import pywt
 from pprint import pprint
 
-from csv_to_pandas import dictionary_of_dataframes
+from csv_to_pandas import csv_into_dict_of_data
 
 def multi_level_DWT_fxn(data_list, wavelet_to_use, level):
 	coeff = pywt.wavedec(data_list, wavelet_to_use, level=level)
@@ -11,8 +11,8 @@ def multi_level_DWT_fxn(data_list, wavelet_to_use, level):
 	return cA
 
 
-def dictOfDF_into_dictOfProtocol_dictOfDate_listOfTotal():
-	df_dict = dictionary_of_dataframes()	
+def dict_of_df_into_dict_of_dict_of_list():
+	df_dict = csv_into_dict_of_data()	
 	protocol_list = list(df_dict.keys() )
 
 	# print(df_dict['total']['2018-09-13'].head(5))
@@ -33,8 +33,8 @@ def dictOfDF_into_dictOfProtocol_dictOfDate_listOfTotal():
 	return dict_protocol_of_dict_date_of_list_of_data_for_day
 
 
-def dictOfDictOfList_rawNumber_to_DWTApprox(wavelet_to_use, level):
-	dict_dict_list = dictOfDF_into_dictOfProtocol_dictOfDate_listOfTotal()
+def csv_into_wavelet_transformed_dict_of_dataframe(wavelet_to_use, level):
+	dict_dict_list = dict_of_df_into_dict_of_dict_of_list()
 	
 	# print(dict_dict_list['total']['2018-10-17'])
 	for dict_list_key, dict_list_value in dict_dict_list.items():
