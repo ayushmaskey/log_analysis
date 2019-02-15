@@ -46,7 +46,8 @@ from es_to_csv import dir_exists, file_exists
 ```
 
 ```python
-def wavelet_tranformation_DWT(level):
+def df_before_transformation():
+def df_after_transformation():
 ```
 > first plot without any transformation 
 * get dictionary of dataframe from csv_to_pandas file using csv_into_dict_of_data function
@@ -58,7 +59,7 @@ def wavelet_tranformation_DWT(level):
 * pass each transformed dataframe to plot_graph_save
 
 ```python
-def plot_graph_and_save(df_dict, identifier):
+def plot_troffic_graph_df_into_graph_and_save(df_dict, identifier):
 ```
 * takes a dictionary of dataframe and id to name the file
 * get the keys of dict which is protocols and convert into list
@@ -70,6 +71,10 @@ def plot_graph_and_save(df_dict, identifier):
 * remove the legend coz too many days which creates long list of legend
 * save the plot in a file
 
+
+```python
+def plot_elbow(df_dict, id):
+```
 ---
 ---
 

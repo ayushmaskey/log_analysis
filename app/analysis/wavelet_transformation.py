@@ -52,9 +52,9 @@ def csv_into_wavelet_transformed_dict_of_dataframe(wavelet_to_use, level):
 
 
 def test():
-	wavelet_to_use = 'db1'
+	wavelet_to_use = 'db2'
 	level = 1
-	dict_dict_list = dictOfDF_into_dictOfProtocol_dictOfDate_listOfTotal()
+	dict_dict_list = csv_into_wavelet_transformed_dict_of_dataframe(wavelet_to_use, level)
 	from pprint import pprint
 	pprint(dict_dict_list['total'])
 	# wavelet_array = multi_level_DWT_fxn(dict_dict_list['total']['2018-10-19'], wavelet_to_use, level)
