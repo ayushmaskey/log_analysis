@@ -89,7 +89,7 @@ from pprint import pprint
 from csv_to_pandas import csv_into_dict_of_data
 ```
 ```python
-def csv_into_wavelet_transformed_dict_of_dataframe(wavelet_to_use, level):
+def csv_into_wavelet_transformed_dict_of_dataframe(wavelet_to_use, level, csv_path):
 ```
 * call dictOfDF_into_dictOfProtocol_dictOfDate_listOfTotal to get dict of dict of list
 * for loop on each key, value pair of dict of dict of list
@@ -137,7 +137,7 @@ import matplotlib.pyplot as plt
 
 
 ```python
-def csv_into_dict_of_data():
+def csv_into_dict_of_data(dataset_path):
 ```
 * calls get_sub_directories_into_list to get list of dir path and dir
 * calls combine_all_csv_to_one_df_per_protcol to get one combined dataframe per protocol

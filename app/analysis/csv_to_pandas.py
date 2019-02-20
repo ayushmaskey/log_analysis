@@ -1,10 +1,11 @@
 import pandas as pd
 import os
 import matplotlib.pyplot as plt
+from constants import training_dataset
 
 def get_sub_directories_into_list(path):
 	dir_list = os.listdir(path)
-	dir_list.remove('test')
+	# dir_list.remove('test')
 	dir_path_list = [path + '/{0}'.format(dirs) for dirs in dir_list ]
 	
 	return dir_path_list, dir_list
@@ -53,8 +54,8 @@ def combine_all_csv_to_one_df_per_protcol(one_subfolder):
 	return df_combined
 
 
-def csv_into_dict_of_data():
-	csv_path = "../../csv"
+def csv_into_dict_of_data(csv_path):
+	# csv_path = "../../csv"
 	dir_path_list, dir_list = get_sub_directories_into_list(csv_path)
 		
 	df_dict = {}
@@ -94,8 +95,11 @@ def test():
 if __name__ == "__main__":
 
 	# test()
+	test_proto = "conn"
 
 	# print dataframe with column names sorted alphabetically 
-	df = combine_all_csv_to_one_df_per_protcol('../../csv/total')
-	df = df.reindex(sorted(x.columns), axis=1)
-	print(df)
+	df_dict = csv_into_dict_of_data(training_dataset)
+	print(list(df_dict))
+	df = df_dict[test_proto]
+	df = df.reindex(sorted(df.columns), axis=1)
+	print(list(df))

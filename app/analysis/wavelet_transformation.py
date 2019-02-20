@@ -3,6 +3,8 @@ import pywt
 from pprint import pprint
 
 from csv_to_pandas import csv_into_dict_of_data
+from constants import training_dataset
+
 
 def multi_level_DWT_fxn(data_list, wavelet_to_use, level):
 	coeff = pywt.wavedec(data_list, wavelet_to_use, level=level)
@@ -11,8 +13,8 @@ def multi_level_DWT_fxn(data_list, wavelet_to_use, level):
 	return cA
 
 
-def dict_of_df_into_dict_of_dict_of_list():
-	df_dict = csv_into_dict_of_data()	
+def dict_of_df_into_dict_of_dict_of_list(training_dataset):
+	df_dict = csv_into_dict_of_data(training_dataset)	
 	protocol_list = list(df_dict.keys() )
 
 	# print(df_dict['total']['2018-09-13'].head(5))
@@ -33,8 +35,8 @@ def dict_of_df_into_dict_of_dict_of_list():
 	return dict_protocol_of_dict_date_of_list_of_data_for_day
 
 
-def csv_into_wavelet_transformed_dict_of_dataframe(wavelet_to_use, level):
-	dict_dict_list = dict_of_df_into_dict_of_dict_of_list()
+def csv_into_wavelet_transformed_dict_of_dataframe(wavelet_to_use, level, csv_path):
+	dict_dict_list = dict_of_df_into_dict_of_dict_of_list(csv_path)
 	
 	# print(dict_dict_list['total']['2018-10-17'])
 	for dict_list_key, dict_list_value in dict_dict_list.items():
@@ -54,16 +56,15 @@ def csv_into_wavelet_transformed_dict_of_dataframe(wavelet_to_use, level):
 def test():
 	wavelet_to_use = 'db2'
 	level = 1
-	dict_dict_list = csv_into_wavelet_transformed_dict_of_dataframe(wavelet_to_use, level)
+	dict_dict_list = csv_into_wavelet_transformed_dict_of_dataframe(wavelet_to_use, level, training_dataset)
 	from pprint import pprint
-	pprint(dict_dict_list['total'])
-	# wavelet_array = multi_level_DWT_fxn(dict_dict_list['total']['2018-10-19'], wavelet_to_use, level)
+	# pprint(dict_dict_list['total'])
 
-
-	# dictOdDictOfList_rawNumber_to_DWTApprox(multi_level_DWT_fxn, wavelet_to_use, 1)
-	# print("\n\r\n\r\n\r")
-	# wavelet_array = single_level_DWT_fxn(dict_dict_list['total']['2018-10-19'], wavelet_to_use, level)
-	# dictOdDictOfList_rawNumber_to_DWTApprox(single_level_DWT_fxn, wavelet_to_use, 1)
+	print(list(dict_dict_list))
+	test_proto = "total"
+	df = dict_dict_list[test_proto]
+	df = df.reindex(sorted(df.columns), axis=1)
+	print(list(df))
 
 
 

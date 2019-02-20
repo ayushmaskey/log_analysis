@@ -7,9 +7,8 @@ style.use("ggplot")
 from csv_to_pandas import csv_into_dict_of_data
 from wavelet_transformation import csv_into_wavelet_transformed_dict_of_dataframe
 
-# from clustering import find_k_for_KMeans_elbow_method_sum_of_square_to_nearest_centroid as elbow1
-from clustering import find_k_for_KMeans_elbow_method_score as elbow2
-from clustering import start, end
+from kmeans_elbow import find_k_for_KMeans_elbow_method_score as elbow
+from constants import start, end, training_dataset, plot_save_dir
 
 import sys
 sys.path.append('../elastic/')
@@ -17,15 +16,15 @@ from es_to_csv import dir_exists, file_exists
 
 from pprint import pprint
 
-save_dir = "../../plots/"
+
 
 def plot_troffic_graph_df_into_graph_and_save(df_dict, identifier):
-	# save_dir = root + "plots/"
+	# plot_save_dir = root + "plots/"
 
 	key_list = list(df_dict.keys() )
 
 	
-	if dir_exists(save_dir):
+	if dir_exists(plot_save_dir):
 	
 		for keys in key_list:
 			df_dict[keys].plot(legend = False)
@@ -33,7 +32,7 @@ def plot_troffic_graph_df_into_graph_and_save(df_dict, identifier):
 			plt.grid(True)
 			plt.xlabel('15 minute interval')
 			plt.ylabel('# of document generated')
-			fileName = save_dir + keys + identifier + ".png"
+			fileName = plot_save_dir + keys + identifier + ".png"
 
 			if file_exists(fileName):
 				plt.savefig(fileName)
@@ -45,7 +44,7 @@ def plot_elbow(df_dict, id):
 	key_list = list(df_dict.keys() )
 
 	for key in key_list:
-		score = elbow2(df_dict[key])
+		score = elbow(df_dict[key])
 		identifier = "elbow_curve_" + key + id
 
 		num_cluster = range(start, end)
@@ -57,7 +56,7 @@ def plot_elbow(df_dict, id):
 		plt.grid(True)
 		plt.title(identifier)
 
-		fileName = save_dir + identifier + ".png"
+		fileName = plot_save_dir + identifier + ".png"
 		print(fileName)
 		if file_exists(fileName):
 			plt.savefig(fileName)
@@ -75,7 +74,7 @@ def df_after_transformation():
 
 	for pywt in wavelet_to_use:
 		for i in range(1,level):
-			df_dict = csv_into_wavelet_transformed_dict_of_dataframe(pywt, i)
+			df_dict = csv_into_wavelet_transformed_dict_of_dataframe(pywt, i, training_dataset)
 
 			identifier = "_" + pywt + "_wavelet_transform_level_" + str(i)
 			plot_troffic_graph_df_into_graph_and_save(df_dict, identifier)
@@ -88,7 +87,7 @@ def df_after_transformation():
 
 def df_before_transformation():
 	# plot graph before any transformation
-	df_dict = csv_into_dict_of_data()
+	df_dict = csv_into_dict_of_data(training_dataset)
 	identifier = "_before_transformation"
 	plot_troffic_graph_df_into_graph_and_save(df_dict, identifier)
 	plot_elbow(df_dict, identifier)
