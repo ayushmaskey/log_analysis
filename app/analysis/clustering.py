@@ -15,20 +15,7 @@ start = 1
 end = 10
 
 
-def unsupervised_heirarchial_MeanShift(df):
-	#MeanShift accurate up to 10,000 data points
-	ms = MeanShift()
-	ms.fit(df)
-
-	labels = ms.labels_
-	centroid_lite = ms.cluster_centers_
-	n_clusters = len(set(labels))
-
-	print('MeanShift')
-	print('Labels:',labels)
-	print('Centroid Lite:',centroid_lite)
-	print(n_clusters)
-
+# fnding elbow
 def find_k_for_KMeans_elbow_method_sum_of_square_to_nearest_centroid(df):
 	distortions = []
 	for k in range(start, end):
@@ -50,27 +37,8 @@ def find_k_for_KMeans_elbow_method_score(df):
 
 	km = [KMeans(n_clusters=i) for i in Nc]
 	score = [km[i].fit(df).score(df) for i in range(len(km))]
-
-	
 	return score
 
-def semi_unsupervised_KMeans(df, num_clusters):
-	
-	km = KMeans(n_clusters = num_clusters)
-	km.fit(df)
-
-	centroids = km.cluster_centers_ 
-	labels = km.labels_
-	inertia = km.inertia_
-
-	print('KMeans')
-	print('Centroids: ', centroids)
-	print('Labels:',labels)
-	print('Inertia: ', inertia)
-	print('num of interation: ', km.n_iter_ )
-
-	# prediction = km.predict(df1)
-	# print(prediction)
 
 
 
