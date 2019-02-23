@@ -8,7 +8,7 @@ from csv_to_pandas import csv_into_dict_of_data
 from wavelet_transformation import csv_into_wavelet_transformed_dict_of_dataframe
 
 from kmeans_elbow import find_k_for_KMeans_elbow_method_score as elbow
-from constants import start, end, training_dataset, plot_save_dir
+from constants import start, end, training_dataset, plot_save_dir, wavelet_to_use
 
 import sys
 sys.path.append('../elastic/')
@@ -69,7 +69,6 @@ def plot_elbow(df_dict, id):
 def df_after_transformation():
 	
 	#plot graph after multiple levels of transformation
-	wavelet_to_use = ['db1','haar']
 	level = 7
 
 	for pywt in wavelet_to_use:

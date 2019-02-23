@@ -13,7 +13,7 @@ from constants import training_dataset, model_save_dir, wavelet_to_use
 #algorithm
 def semi_unsupervised_KMeans(df, num_clusters):
 	
-	km = KMeans(n_clusters = num_clusters)
+	km = KMeans(n_clusters = num_clusters, init = 'k-means++', max_iter=300, random_state=0)
 	km.fit(df)
 	return km 
 
@@ -40,24 +40,10 @@ def training(algo, df_dict, str1, str2):
 		
 
 
-def test_print(model):
-	centroids = km.cluster_centers_ 
-	labels = km.labels_
-	inertia = km.inertia_
+def testing():
+	df_dict = csv_into_dict_of_data(training_dataset)
 
-	print('KMeans', key)
-	print('Centroids: ', centroids)
-	print('Labels:',labels)
-	print('Inertia: ', inertia)
-	print('num of interation: ', km.n_iter_ )
-
-def test_new_df_dict():
-	df_dict = training()
-
-	key_list = list(df_dict.keys())
-	print(key_list)
-	for key in key_list:
-		print(key, list(df_dict[key].columns))
+	training(semi_unsupervised_KMeans, df_dict, str_kmeans, str_no_transform)
 
 def start_training():
 
@@ -85,4 +71,4 @@ def start_training():
 
 
 if __name__ == "__main__":
-	start_training()
+	testing()
