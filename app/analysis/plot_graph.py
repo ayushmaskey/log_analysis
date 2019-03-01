@@ -22,7 +22,7 @@ def plot_troffic_graph_df_into_graph_and_save(df_dict, identifier):
 	# plot_save_dir = root + "plots/"
 
 	key_list = list(df_dict.keys() )
-
+	wavelet_dir = "wavelet/" 
 	
 	if dir_exists(plot_save_dir):
 	
@@ -32,7 +32,7 @@ def plot_troffic_graph_df_into_graph_and_save(df_dict, identifier):
 			plt.grid(True)
 			plt.xlabel('15 minute interval')
 			plt.ylabel('# of document generated')
-			fileName = plot_save_dir + keys + identifier + ".png"
+			fileName = plot_save_dir + wavelet_dir + keys + identifier + ".png"
 
 			if file_exists(fileName):
 				plt.savefig(fileName)
@@ -42,6 +42,7 @@ def plot_troffic_graph_df_into_graph_and_save(df_dict, identifier):
 
 def plot_elbow(df_dict, id):
 	key_list = list(df_dict.keys() )
+	elbow_dir = "elbow/"
 
 	for key in key_list:
 		score = elbow(df_dict[key])
@@ -56,7 +57,7 @@ def plot_elbow(df_dict, id):
 		plt.grid(True)
 		plt.title(identifier)
 
-		fileName = plot_save_dir + identifier + ".png"
+		fileName = plot_save_dir + elbow_dir + identifier + ".png"
 		print(fileName)
 		if file_exists(fileName):
 			plt.savefig(fileName)
