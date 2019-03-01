@@ -8,7 +8,7 @@ from sklearn.externals import joblib
 
 from csv_to_pandas import csv_into_dict_of_data
 from wavelet_transformation import csv_into_wavelet_transformed_dict_of_dataframe
-from constants import training_dataset, model_save_dir, wavelet_to_use
+from constants import training_dataset, model_save_dir, wavelet_to_use, k_in_kmeans
 
 #algorithm
 def semi_unsupervised_KMeans(df, num_clusters):
@@ -24,16 +24,18 @@ def unsupervised_heirarchial_MeanShift(df, num_clusters):
 	return ms
 
 
-def training(algo, df_dict, str1, str2):
+def training(algo, df_dict, str1, str2, k_dict):
 	
 	key_list = list(df_dict.keys())
 	for key in key_list:
 		df = df_dict[key]
 		df = df.reindex(sorted(df.columns), axis = 1)
 
+		k = k_dict[key]
+
 		df_dict[key] = df
 
-		cluster_model = algo(df_dict[key], 3)
+		cluster_model = algo(df_dict[key], k)
 		filename = model_save_dir + str1 + key + str2 + ".pkl"
 		print(filename)
 		_ = joblib.dump(cluster_model, filename, compress=9)
@@ -41,9 +43,8 @@ def training(algo, df_dict, str1, str2):
 
 
 def testing():
-	df_dict = csv_into_dict_of_data(training_dataset)
-
-	training(semi_unsupervised_KMeans, df_dict, str_kmeans, str_no_transform)
+	k_dict = k_in_kmeans["before"]
+	print(k["dns"])
 
 def start_training():
 
@@ -53,8 +54,10 @@ def start_training():
 	str_no_transform = "_before_transformation"
 	df_dict = csv_into_dict_of_data(training_dataset)
 
-	training(semi_unsupervised_KMeans, df_dict, str_kmeans, str_no_transform)
-	training(unsupervised_heirarchial_MeanShift, df_dict, str_meanshift, str_no_transform)
+	k_dict = k_in_kmeans["before"]
+
+	training(semi_unsupervised_KMeans, df_dict, str_kmeans, str_no_transform, k_dict)
+	training(unsupervised_heirarchial_MeanShift, df_dict, str_meanshift, str_no_transform, k_dict )
 
 
 	level = 4
@@ -65,10 +68,10 @@ def start_training():
 		
 			str_transformation = "_" + pywt + "_wavelet_transform_level_" + str(i)
 
-			training(semi_unsupervised_KMeans, df_dict, str_kmeans, str_transformation)
-			training(unsupervised_heirarchial_MeanShift, df_dict, str_meanshift, str_transformation)			
+			training(semi_unsupervised_KMeans, df_dict, str_kmeans, str_transformation, k_dict)
+			training(unsupervised_heirarchial_MeanShift, df_dict, str_meanshift, str_transformation, k_dict)			
 
 
 
 if __name__ == "__main__":
-	testing()
+	start_training()
