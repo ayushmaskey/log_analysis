@@ -13,6 +13,17 @@ model_save_dir = "../../model/"
 
 wavelet_to_use = ['db1','haar']
 
+label_color_map = {
+	0: 'red',	
+	1: 'blue',	
+	2: 'green',	
+	3: 'black',	
+	4: 'cyan',	
+	5: 'magenta',	
+	6: 'yellow',	
+	7: 'orange',	
+}
+
 k_in_kmeans = {
 		"before": 
 		{
@@ -25,83 +36,84 @@ k_in_kmeans = {
 			"snmp": 7,
 			"total": 7,
 			"weird": 5,
-		},
-		"db1": 
-		{
-			1: 
-			{
-				"conn": ,
-				"dhcp": ,
-				"dns": ,
-				"external": ,
-				"files": ,
-				"http": ,
-				"snmp": ,
-				"total": ,
-				"weird": ,
-			}, 
-			2: 
-			{
-				"conn": ,
-				"dhcp": ,
-				"dns": ,
-				"external": ,
-				"files": ,
-				"http": ,
-				"snmp": ,
-				"total": ,
-				"weird": ,
-			}, 
-			3: 
-			{
-				"conn": ,
-				"dhcp": ,
-				"dns": ,
-				"external": ,
-				"files": ,
-				"http": ,
-				"snmp": ,
-				"total": ,
-				"weird": ,
-			}
-		},
-		"haar": 
-		{
-			1: 
-			{
-				"conn": ,
-				"dhcp": ,
-				"dns": ,
-				"external": ,
-				"files": ,
-				"http": ,
-				"snmp": ,
-				"total": ,
-				"weird": ,
-			}, 
-			2: 
-			{
-				"conn": ,
-				"dhcp": ,
-				"dns": ,
-				"external": ,
-				"files": ,
-				"http": ,
-				"snmp": ,
-				"total": ,
-				"weird": ,
-			}, 
-			3: 
-			{
-				"conn": ,
-				"dhcp": ,
-				"dns": ,
-				"external": ,
-				"files": ,
-				"http": ,
-				"snmp": ,
-				"total": ,
-				"weird": ,
-			}
 		}
+		# ,
+		# "db1": 
+		# {
+		# 	1: 
+		# 	{
+		# 		"conn": ,
+		# 		"dhcp": ,
+		# 		"dns": ,
+		# 		"external": ,
+		# 		"files": ,
+		# 		"http": ,
+		# 		"snmp": ,
+		# 		"total": ,
+		# 		"weird": ,
+		# 	}, 
+		# 	2: 
+		# 	{
+		# 		"conn": ,
+		# 		"dhcp": ,
+		# 		"dns": ,
+		# 		"external": ,
+		# 		"files": ,
+		# 		"http": ,
+		# 		"snmp": ,
+		# 		"total": ,
+		# 		"weird": ,
+		# 	}, 
+		# 	3: 
+		# 	{
+		# 		"conn": ,
+		# 		"dhcp": ,
+		# 		"dns": ,
+		# 		"external": ,
+		# 		"files": ,
+		# 		"http": ,
+		# 		"snmp": ,
+		# 		"total": ,
+		# 		"weird": ,
+		# 	}
+		# },
+		# "haar": 
+		# {
+		# 	1: 
+		# 	{
+		# 		"conn": ,
+		# 		"dhcp": ,
+		# 		"dns": ,
+		# 		"external": ,
+		# 		"files": ,
+		# 		"http": ,
+		# 		"snmp": ,
+		# 		"total": ,
+		# 		"weird": ,
+		# 	}, 
+		# 	2: 
+		# 	{
+		# 		"conn": ,
+		# 		"dhcp": ,
+		# 		"dns": ,
+		# 		"external": ,
+		# 		"files": ,
+		# 		"http": ,
+		# 		"snmp": ,
+		# 		"total": ,
+		# 		"weird": ,
+		# 	}, 
+		# 	3: 
+		# 	{
+		# 		"conn": ,
+		# 		"dhcp": ,
+		# 		"dns": ,
+		# 		"external": ,
+		# 		"files": ,
+		# 		"http": ,
+		# 		"snmp": ,
+		# 		"total": ,
+		# 		"weird": ,
+		# 	}
+		# }
 	}
