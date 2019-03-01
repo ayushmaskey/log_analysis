@@ -46,11 +46,10 @@ def testing():
 	k_dict = k_in_kmeans["before"]
 	print(k["dns"])
 
-def start_training():
+str_kmeans = "kmeans_model_"
+str_meanshift = "meanshift_model_"
 
-	str_kmeans = "kmeans_model_"
-	str_meanshift = "meanshift_model_"
-
+def before_transformation():
 	str_no_transform = "_before_transformation"
 	df_dict = csv_into_dict_of_data(training_dataset)
 
@@ -60,6 +59,7 @@ def start_training():
 	training(unsupervised_heirarchial_MeanShift, df_dict, str_meanshift, str_no_transform, k_dict )
 
 
+def after_transformation():
 	level = 4
 
 	for pywt in wavelet_to_use:
@@ -71,6 +71,9 @@ def start_training():
 			training(semi_unsupervised_KMeans, df_dict, str_kmeans, str_transformation, k_dict)
 			training(unsupervised_heirarchial_MeanShift, df_dict, str_meanshift, str_transformation, k_dict)			
 
+def start_training():
+	before_transformation()
+	after_transformation()
 
 
 if __name__ == "__main__":

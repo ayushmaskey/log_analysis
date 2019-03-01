@@ -27,17 +27,18 @@ def plot_troffic_graph_df_into_graph_and_save(df_dict, identifier):
 	if dir_exists(plot_save_dir):
 	
 		for keys in key_list:
-			df_dict[keys].plot(legend = False)
+			df_dict[keys].plot(legend = False, figsize=(30, 15))
 			plt.title(keys + "_traffic" + identifier)
 			plt.grid(True)
 			plt.xlabel('15 minute interval')
 			plt.ylabel('# of document generated')
 			fileName = plot_save_dir + wavelet_dir + keys + identifier + ".png"
 
+			print(fileName)
 			if file_exists(fileName):
 				plt.savefig(fileName)
 			# plt.show()
-			plt.close()
+			plt.close('all')
 	return
 
 def plot_elbow(df_dict, id):
@@ -62,6 +63,7 @@ def plot_elbow(df_dict, id):
 		if file_exists(fileName):
 			plt.savefig(fileName)
 		# plt.show()
+
 		plt.close()
 	return
 
@@ -86,11 +88,13 @@ def df_after_transformation():
 
 
 def df_before_transformation():
-	# plot graph before any transformation
+	"""plot graph before any transformation"""
 	df_dict = csv_into_dict_of_data(training_dataset)
 	identifier = "_before_transformation"
 	plot_troffic_graph_df_into_graph_and_save(df_dict, identifier)
 	plot_elbow(df_dict, identifier)
+
+	# print(df_dict)
 
 
 
