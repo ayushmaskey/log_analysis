@@ -41,33 +41,51 @@ def plot_troffic_graph_df_into_graph_and_save(df_dict, identifier):
 			plt.close('all')
 	return
 
-def plot_elbow(df_dict, id):
+
+def plot_elbow(score, elbow_dir, identifier):
+	num_cluster = range(start, end)
+
+	fig = plt.figure(figsize=(15, 5))
+	plt.plot(num_cluster,score)
+	plt.xlabel('Number of Clusters')
+	plt.ylabel('Score')
+	plt.grid(True)
+	plt.title(identifier)
+
+	fileName = plot_save_dir + elbow_dir + identifier + ".png"
+	print(fileName)
+	if file_exists(fileName):
+		plt.savefig(fileName)
+	# plt.show()
+
+	plt.close()
+
+def get_elbow_by_date_and_time(df_dict, id):
 	key_list = list(df_dict.keys() )
-	elbow_dir = "elbow/"
+	elbow_date_dir = "elbow_date/"
+	elbow_time_dir = "elbow_time/"
 
 	for key in key_list:
-		score = elbow(df_dict[key])
-		identifier = "elbow_curve_" + key + id
+		identifier = "elbow_curve_by_date_" + key + id
+		score_by_date = elbow(df_dict[key].T)
+		plot_elbow(score_by_date, elbow_date_dir, identifier)
 
-		num_cluster = range(start, end)
-
-		fig = plt.figure(figsize=(15, 5))
-		plt.plot(num_cluster,score)
-		plt.xlabel('Number of Clusters')
-		plt.ylabel('Score')
-		plt.grid(True)
-		plt.title(identifier)
-
-		fileName = plot_save_dir + elbow_dir + identifier + ".png"
-		print(fileName)
-		if file_exists(fileName):
-			plt.savefig(fileName)
-		# plt.show()
-
-		plt.close()
+		identifier = "elbow_curve_by_time_" + key + id
+		score_by_time = elbow(df_dict[key])
+		plot_elbow(score_by_time, elbow_time_dir, identifier)		
+		
 	return
 
 
+def remove_zero_columns(df_dict):
+	key_list = list(df_dict.keys())
+	
+	for key in key_list:
+		df = df_dict[key]
+		df = df.loc[ :, (df > 10).any(axis=0) ]
+		df_dict[key] = df
+
+	return df_dict
 
 def df_after_transformation():
 	
@@ -77,22 +95,24 @@ def df_after_transformation():
 	for pywt in wavelet_to_use:
 		for i in range(1,level):
 			df_dict = csv_into_wavelet_transformed_dict_of_dataframe(pywt, i, training_dataset)
+			df_dict = remove_zero_columns(df_dict)
 
 			identifier = "_" + pywt + "_wavelet_transform_level_" + str(i)
 			plot_troffic_graph_df_into_graph_and_save(df_dict, identifier)
 			print(identifier)
 
 			if i < 4:
-				plot_elbow(df_dict, identifier)
+				get_elbow_by_date_and_time(df_dict, identifier)
 
 
 
 def df_before_transformation():
 	"""plot graph before any transformation"""
 	df_dict = csv_into_dict_of_data(training_dataset)
+	df_dict = remove_zero_columns(df_dict)
 	identifier = "_before_transformation"
 	plot_troffic_graph_df_into_graph_and_save(df_dict, identifier)
-	plot_elbow(df_dict, identifier)
+	get_elbow_by_date_and_time(df_dict, identifier)
 
 	# print(df_dict)
 

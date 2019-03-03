@@ -24,8 +24,21 @@ label_color_map = {
 	7: 'orange',	
 }
 
-k_in_kmeans = {
-		"before": 
+
+k_in_kmeans_before = {
+		"date": 
+		{
+			"conn": 7,
+			"dhcp": 2,
+			"dns": 6,
+			"external": 5,
+			"files": 4,
+			"http": 6,
+			"snmp": 7,
+			"total": 5,
+			"weird": 7,
+		},
+		"time": 
 		{
 			"conn": 6,
 			"dhcp": 5,
@@ -37,6 +50,7 @@ k_in_kmeans = {
 			"total": 7,
 			"weird": 5,
 		}
+	}
 		# ,
 		# "db1": 
 		# {
@@ -116,4 +130,4 @@ k_in_kmeans = {
 		# 		"weird": ,
 		# 	}
 		# }
-	}
+	# }
