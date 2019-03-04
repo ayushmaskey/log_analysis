@@ -12,6 +12,9 @@ from csv_to_pandas import csv_into_dict_of_data
 from wavelet_transformation import csv_into_wavelet_transformed_dict_of_dataframe
 from constants import training_dataset, model_save_dir, wavelet_to_use, k_in_kmeans_before, label_color_map,plot_save_dir
 from plot_graph import remove_zero_columns
+
+import sys
+sys.path.append('../elastic/')
 from es_to_csv import dir_exists, file_exists
 
 algorithm = ''
@@ -35,7 +38,7 @@ def dbscan_clustering(df, num_clusters):
 	print(db)
 	return db
 
-def plot_cluster_model(df, labels, key, str1, str2, xlabel):
+def plot_cluster_model(df, labels, key, str1, str2, xlabel, cluster_location):
 	
 	color_scheme = []
 
@@ -66,13 +69,18 @@ def plot_cluster_model(df, labels, key, str1, str2, xlabel):
 	plt.xlabel(xlabel)
 	plt.ylabel('# of document generated')
 
-	fileName = plot_save_dir + 'training_cluster/' + str1 + key + str2 + '_' + 'cluster_colored_by_' + xlabel + ".png"
+	fileName = plot_save_dir + cluster_location + str1 + key + str2 + '_' + 'cluster_colored_by_' + xlabel + ".png"
 	print(fileName)
 
 	if file_exists(fileName):
 		plt.savefig(fileName)
 	# plt.show()
 	plt.close('all')
+
+def save_dataframe_with_cluster(df_pivot, fileName):
+	print(fileName)
+	_ = joblib.dump(df_pivot, fileName, compress=9)
+
 
 def training(algo, df_dict, str1, str2):
 	df_dict = remove_zero_columns(df_dict)
@@ -89,43 +97,49 @@ def training(algo, df_dict, str1, str2):
 
 		df_dict[key] = df
 
-		"""by date ie transformation/ pivot"""
+		"""by date ie transformation/ pivot 
+		--> date as row/ index, time as column"""
 		k = k_dict_date[key]
 		df_pivot[key] = df_dict[key].T 
+
 		cluster_model_date = algo(df_pivot[key], k)
 		cluster_label = cluster_model_date.labels_
 
-		plot_cluster_model(df_pivot[key], cluster_label, key, str1, str2, 'dates')
+		"""Plot color line graph of clustered df"""
+		plot_cluster_model(df_pivot[key], cluster_label, key, str1, str2, 'dates', 'training_cluster/')
 
 
 		df_pivot[key]['cluster'] = cluster_label
 
-		filename = model_save_dir + "cluster_date_model/" + str1 + key + str2 + ".pkl"
-		print(filename)
-		_ = joblib.dump(cluster_model_date, filename, compress=9)
+		"""save model"""
+		time_model_filename = model_save_dir + "cluster_date_model/" + str1 + key + str2 + ".pkl"
+		print(time_model_filename)
+		_ = joblib.dump(cluster_model_date, time_model_filename, compress=9)
 
-		df_filename = model_save_dir + "training_dataframe/" + str1 + "training_dataframe_by_date.pkl"
-		print(df_filename)
-		_ = joblib.dump(df_pivot, df_filename, compress=9)
+		"""save dataframe"""
+		df_date_filename = model_save_dir + "training_dataframe/" + str1 + '_' + key + "training_dataframe_by_date.pkl"
+		save_dataframe_with_cluster(df_pivot[key], df_date_filename)
+		
 
 
-		"""by time original that was messed up a bit"""
+		"""by time original that was messed up a bit
+		--> time as row/ index, date as column"""
 		k1 = k_dict_time[key]
 		cluster_model_time = algo(df_dict[key], k1)
 		cluster_label1 = cluster_model_time.labels_
 
-		plot_cluster_model(df_dict[key], cluster_label, key, str1, str2, '15_minute_interval')
+		plot_cluster_model(df_dict[key], cluster_label1, key, str1, str2, '15_minute_interval', 'training_cluster/')
 
 
 		df_dict[key]['cluster'] = cluster_label1
 
-		filename2 = model_save_dir + "cluster_time_model/" + str1 + key + str2 + ".pkl"
-		print(filename2)
-		_ = joblib.dump(cluster_model_date, filename, compress=9)
+		date_model_filename = model_save_dir + "cluster_time_model/" + str1 + key + str2 + ".pkl"
+		print(date_model_filename)
+		_ = joblib.dump(cluster_model_time, date_model_filename, compress=9)
 		
-		df_filename2 = model_save_dir + "training_dataframe/" + str1 + "training_dataframe_by_time.pkl"
-		print(df_filename2)
-		_ = joblib.dump(df_dict, df_filename2, compress=9)
+		df_time_filename = model_save_dir + "training_dataframe/" + str1 + '_' + key + "training_dataframe_by_time.pkl"
+		save_dataframe_with_cluster(df_dict[key], df_time_filename)
+
 
 
 
@@ -140,7 +154,7 @@ def before_transformation():
 
 
 	training(semi_unsupervised_KMeans, df_dict, str_kmeans, str_no_transform)
-	# training(unsupervised_heirarchial_MeanShift, df_dict, str_meanshift, str_no_transform )
+	training(unsupervised_heirarchial_MeanShift, df_dict, str_meanshift, str_no_transform )
 	# training(dbscan_clustering, df_dict, str_kmeans, str_no_transform)
 
 
