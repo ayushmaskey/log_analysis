@@ -117,9 +117,14 @@ def df_before_transformation():
 	# print(df_dict)
 
 
+def sample_Presentation():
+	df_dict = csv_into_dict_of_data(training_dataset)
+	df = df_dict['dns']
+	print(df)
 
 
 if __name__ == "__main__":
 
-	df_before_transformation()
-	df_after_transformation()
+	# df_before_transformation()
+	# df_after_transformation()
+	sample_Presentation()
