@@ -48,26 +48,26 @@ def testing_dataset_with_saved_model(df, key, model_loc):
 
 
 
-def testing_february():
+def testing_february(key):
 	df_dict = csv_into_dict_of_data(testing_dataset)
 	df_dict = remove_zero_columns(df_dict)
+	return df_dict[key]
+	# df_pivot = {}
 
-	df_pivot = {}
 
+	# key_list = list(df_dict.keys())
+	# for key in key_list:
+	# 	df = df_dict[key]
+	# 	df = df.reindex(sorted(df.columns), axis = 1)
 
-	key_list = list(df_dict.keys())
-	for key in key_list:
-		df = df_dict[key]
-		df = df.reindex(sorted(df.columns), axis = 1)
+	# 	df_dict[key] = df
+	# 	df_pivot[key] = df_dict[key].T 
 
-		df_dict[key] = df
-		df_pivot[key] = df_dict[key].T 
-
-		# testtin_dataset_with_saved_model(df_dict[key], key, time_model_loc)
-		testing_dataset_with_saved_model(df_pivot[key], key, date_model_loc)
+	# 	# testtin_dataset_with_saved_model(df_dict[key], key, time_model_loc)
+	# 	testing_dataset_with_saved_model(df_pivot[key], key, date_model_loc)
 
 		
 
 if __name__ == "__main__":
 
-	testing_february()
+	testing_february('snmp')

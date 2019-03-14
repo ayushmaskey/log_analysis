@@ -3,9 +3,9 @@
 start = 1
 end = 10
 
-training_dataset = "../../csv/training_dataset"
-testing_dataset = "../../csv/testing_dataset"
-validation_dataset = "../../csv/"
+training_dataset = "../../training_dataset"
+testing_dataset = "../../testing_dataset"
+validation_dataset = "../../csv"
 
 plot_save_dir = "../../plots/"
 

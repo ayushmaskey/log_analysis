@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 import matplotlib.pyplot as plt
-from constants import training_dataset
+from constants import testing_dataset, training_dataset,validation_dataset
 
 def get_sub_directories_into_list(path):
 	dir_list = os.listdir(path)
@@ -59,8 +59,10 @@ def csv_into_dict_of_data(csv_path):
 	dir_path_list, dir_list = get_sub_directories_into_list(csv_path)
 		
 	df_dict = {}
+	# ignore_folder = 'dataset'
 
 	for i in range(0, len(dir_path_list)):
+		# if ignore_folder not in dir_path_list[i]:  
 		df_dict[dir_list[i]] = combine_all_csv_to_one_df_per_protcol(dir_path_list[i])
 
 
@@ -72,34 +74,37 @@ def csv_into_dict_of_data(csv_path):
 def test():
 	csv_path = "../../csv"
 	one_folder = csv_path + "/total/"
-	one_file = one_folder + "total_2018-10-12.csv"
+	one_file = one_folder + "total_2019-03-11.csv"
 
 	dir_path, dir_list = get_sub_directories_into_list(csv_path)
-	# print(dir_path)
+	print(dir_path)
+	print(dir_list)
+
 
 	files = get_all_fileNames_inside_folders(dir_path[0])
-	# print(files)
+	print(files)
 
 	one_df = make_dataframe_from_csv(one_file)
-	# print(one_df.head(5))
+	print(one_df.head(5))
 
 	df_list = make_list_of_dataframe_from_fileNames(files)
-	# print(df_list)
+	print(df_list)
 
 	df_csv = combine_all_csv_to_one_df_per_protcol(one_folder)
-	# print(df_csv.head(5))
+	print(df_csv.head(5))
 
-	# df = dictionary_of_dataframes(csv_path)
-	# print(df)
+	df = csv_into_dict_of_data(csv_path)
+	print(df)
 
 if __name__ == "__main__":
 
 	# test()
-	test_proto = "conn"
 
-	# print dataframe with column names sorted alphabetically 
-	df_dict = csv_into_dict_of_data(training_dataset)
-	print(list(df_dict))
-	df = df_dict[test_proto]
-	df = df.reindex(sorted(df.columns), axis=1)
-	print(list(df))
+	'''print dataframe with column names sorted alphabetically''' 
+	test_proto = "snmp"
+	# print(list(df_dict))
+	# df = df_dict[test_proto]
+	# df = df.reindex(sorted(df.columns), axis=1)
+	# print(list(df))
+
+	print(df_dict)
