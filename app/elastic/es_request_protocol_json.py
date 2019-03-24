@@ -52,7 +52,7 @@ def json_protocol_query(index, start, end):
 
 
 if __name__ == "__main__":
-	ind = "*"
+	ind = "dhcp"
 	start = "now-1d"
 	end = "now"
 	tag1 = "*"

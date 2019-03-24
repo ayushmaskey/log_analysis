@@ -26,6 +26,17 @@ def es_3agg_2tag_agg(start, end):
 		df = es_pandas.es_nested_agg_pandas(start, end, json_internal_to_internal)
 		es_to_csv.append_nested_aggs_to_csv(fileName, df)
 
+# sample printout to remind myself whats up
+def sample_es_simple_agg():
+	ind = es_index_fileName.single_level_query()
+
+	start = "now-1d"
+	end = "now"
+
+	print(ind)
+	ind = "bro_dhcp"
+	df = es_pandas.es_traffic_pandas_csv(ind, start, end)
+	print(df)
 
 #main function to load data --> set up run automatically using cron job
 def load_main():
@@ -40,3 +51,6 @@ def load_main():
 
 if __name__ == "__main__":
 	load_main()
+
+	# sample_es_simple_agg()
+

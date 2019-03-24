@@ -125,12 +125,23 @@ def es_nested_agg_pandas(start, end, fn_for_json_query, traffic_type):
 
 #testing only
 def test_main():
-	start = "now-2d"
+	start = "now-1d"
 	end = "now"
-	df = es_traffic_pandas_csv("*", start, end)
-	print(df)
+	ind = "brp_dhcp"
+	q = json_external_query(ind, start, end)
 
-def test2():
+	es = es_connect()
+
+	es_response = es.search(index="*", body=q)
+	
+	agg_list = es_response['aggregations']['total_traffic']['buckets']
+	df = get_pandas_dataframe(agg_list)
+	df = es_traffic_pandas_csv("*", start, end)
+
+	import pprint
+	pprint.pprint(es_response)
+
+def main():
 	start = "now-2d"
 	end = "now"
 	df1 = es_nested_agg_pandas(start, end, json_internal_to_external, "iSrc_eDst")
@@ -141,5 +152,5 @@ def test2():
 
 if __name__ == "__main__":
 
-	test2()
-	
+	main()
+	# test_main()
