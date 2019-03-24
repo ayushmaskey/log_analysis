@@ -14,10 +14,11 @@ model_save_dir = "../../model/"
 wavelet_to_use = ['db1','haar']
 
 label_color_map = {
+	-1: 'black',
 	0: 'red',	
 	1: 'blue',	
 	2: 'green',	
-	3: 'black',	
+	3: 'brown',	
 	4: 'cyan',	
 	5: 'magenta',	
 	6: 'yellow',	

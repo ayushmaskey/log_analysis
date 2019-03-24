@@ -27,8 +27,8 @@ def plot_elbow(score):
 	# Plot the elbow
 	fig = plt.figure(figsize=(15, 5))
 	plt.plot(range(start, end), score)
-	plt.xlabel('Number of Clusters')
-	plt.ylabel('Score')
+	# plt.xlabel('Number of Clusters')
+	# plt.ylabel('Score')
 	plt.grid(True)
 	plt.title('Elbow Method to find k using inertia_')
 	plt.show()
@@ -39,7 +39,7 @@ if __name__ == "__main__":
 	key_list = list(df_dict.keys())
 
 
-	df = df_dict['dhcp']
+	df = df_dict['snmp']
 	score = find_k_for_KMeans_elbow_method_score(df)
 	print(score)
 	plot_elbow(score)
